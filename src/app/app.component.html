@@ -1,0 +1,16 @@
+<!--<div>
+<h1>
+  {{title}}
+</h1>
+<button (click)="customMethods(title)">CHANGE TITLE</button>
+<header>
+</header> -->
+<!--<users></users>-->
+
+<ul class="nav nav-pills">
+  <li role="presentation"><a [routerLink]="['/post-list']">List Of Posts</a></li>
+  <li role="presentation"><a [routerLink]="['/post-form']">Create New Post</a></li>
+  <li role="presentation"><a [routerLink]="['/reactive-form']">Reactive Form Example</a></li>
+</ul>
+
+<router-outlet></router-outlet>

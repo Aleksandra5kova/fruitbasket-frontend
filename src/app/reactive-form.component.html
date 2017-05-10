@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>Reactive Form Example</h1>
+      <form novalidate [formGroup]="post">
+        <label class="form-group">
+          <span>User ID</span>
+          <input type="text" class="form-control" placeholder="Enter User ID" formContolName="userid"/>
+        </label><br/>
+        <label class="form-group">
+          <span>Title</span>
+          <input type="text" class="form-control" placeholder="Enter Title" formControlName="title"/>
+        </label><br/>
+        <label clas="form-group">
+          <span>Body</span>
+          <input type="text" class="form-control" placeholder="Enter Body" formControlName="body"/>
+        </label><br/><br/>
+        <button type="submit" class="btn btn-primary" (click)="submitForm()">Submit</button>
+      </form>
+
+    </div>
+  </div>
+</div>
