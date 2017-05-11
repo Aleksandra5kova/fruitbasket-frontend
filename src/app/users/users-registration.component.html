@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="row">
+        <div class="col-md-offset-3 col-md-6">
+          <h1>Sign Up</h1>
+          <form>
+              <div class="form-group">
+                <label for="firstname">Firstname</label>
+                <input type="text" id="firstname" name="firstname" class="form-control" placeholder="Enter firstname" [(ngModel)]="user.firstname"/>
+              </div>
+              <div class="form-group">
+                <label for="lastname">Lastname</label>
+                <input type="text" id="lastname" name="lastname" class="form-control" placeholder="Enter lastname" [(ngModel)]="user.lastname"/>
+              </div>
+              <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" class="form-control" placeholder="Enter username" [(ngModel)]="user.username"/>
+              </div>
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input type="text" id="password" name="password" class="form-control" placeholder="Enter password" [(ngModel)]="user.password"/>
+              </div>
+              <button type="submit" class="btn btn-primary" (click)="saveUser()">Sign Up</button>
+          </form>
+        </div>
+      </div>
+</div>
+
