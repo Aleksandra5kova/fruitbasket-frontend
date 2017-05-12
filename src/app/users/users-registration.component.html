@@ -1,27 +1,56 @@
 <div class="container">
-  <div class="row">
-        <div class="col-md-offset-3 col-md-6">
-          <h1>Sign Up</h1>
-          <form>
+ 
+ <div>
+          <h2>Sign Up</h2>
+          <form #userForm="ngForm" >
+              
               <div class="form-group">
-                <label for="firstname">Firstname</label>
-                <input type="text" id="firstname" name="firstname" class="form-control" placeholder="Enter firstname" [(ngModel)]="user.firstname"/>
+                <div class="col-sm-10 col-md-offset-1">
+
+                  <label for="email">Email</label>
+                  <input type="email" id="email" name="email" class="form-control" placeholder="Enter email" required [(ngModel)]="user.email" #email="ngModel"/><br/>
+
+                  <div *ngIf="email.errors && (email.dirty || email.touched)">
+                    <div [hidden]="!email.errors.required">
+                      Email is required
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+              <!--<div class="form-group">
+                <div class="col-sm-10 col-md-offset-1">
+                  <label for="username">Username</label>
+                  <input type="text" id="username" name="username" class="form-control" placeholder="Enter username" [(ngModel)]="user.username"/><br/>
+                </div>
               </div>
               <div class="form-group">
-                <label for="lastname">Lastname</label>
-                <input type="text" id="lastname" name="lastname" class="form-control" placeholder="Enter lastname" [(ngModel)]="user.lastname"/>
+                  <div class="col-sm-10 col-md-offset-1">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Enter password" [(ngModel)]="user.password"/><br/>
+                  </div>
               </div>
               <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" class="form-control" placeholder="Enter username" [(ngModel)]="user.username"/>
+                <div class="col-sm-10 col-md-offset-1">
+                  <label for="passwordConfirm">Password Confirmation</label>
+                  <input type="password" id="passwordConfirm" name="passwordConfirm" class="form-control" placeholder="Confirm password" [(ngModel)]="user.passwordConfirm"/><br/>
+                </div>
+              </div>-->
+              
+              
+              <!--<div class="form-group">
+                  <div class="col-sm-10 col-md-offset-1"><br/>
+                      <button type="submit" class="btn btn-primary btn-block" (click)="saveUser()">Sign up</button><br/><br/>
+                  </div>
+              </div> -->
+
+               <!--<button type="submit" class="btn btn-default" [disabled]="!loginForm.form.valid">Submit</button>-->
+               <div class="form-group">
+                <div class="col-sm-10 col-md-offset-1">
+                    <button type="submit" class="btn btn-default" [disabled]="!userForm.form.valid" (click)="saveUser()">Submit</button>
+                </div>
               </div>
-              <div class="form-group">
-                <label for="password">Password</label>
-                <input type="text" id="password" name="password" class="form-control" placeholder="Enter password" [(ngModel)]="user.password"/>
-              </div>
-              <button type="submit" class="btn btn-primary" (click)="saveUser()">Sign Up</button>
           </form>
-        </div>
-      </div>
+  </div>
 </div>
 

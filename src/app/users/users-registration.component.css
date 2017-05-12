@@ -1,0 +1,11 @@
+.row {
+    margin-top:50px;
+}
+#loginForm {
+   border-radius:0px;
+}
+#border{
+    padding-left: 0px; 
+    padding-right: 0px; 
+    border:2px solid #f0ad4e;
+}

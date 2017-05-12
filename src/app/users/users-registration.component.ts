@@ -4,28 +4,29 @@ import { UsersService } from './users.service';
 
 @Component({
   selector: 'app-user-registration',
-  templateUrl: './users-registration.component.html'
+  templateUrl: './users-registration.component.html',
+  styleUrls: ['./users-registration.component.css']
 })
 export class UserRegistrationComponent {
 
   users;
   user = {
-    firstname: '',
-    lastname: '',
+    email: '',
     username: '',
-    password: ''
+    password: '',
+    passwordConfirm: '',
   };
 
-  constructor(private usersService: UsersService) {}
+  constructor(private usersService: UsersService){}
 
   saveUser() {
       this.usersService.saveUser(this.user).subscribe(user => {
         this.users.push(user);
       });
-      this.user.firstname = '';
-      this.user.lastname = '';
+      /*this.user.email = '';
       this.user.username = '';
       this.user.password = '';
+      this.user.passwordConfirm = '';*/
     }
-    
+
 }

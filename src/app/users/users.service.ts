@@ -17,10 +17,7 @@ export class UsersService {
   }
 
    saveUser(user) {
-      const headers = new Headers({ 'Content-Type' : 'application/json' });
-      const options = new RequestOptions({ headers : headers });
-
-       return this.http.post(`${this.baseUrl}/users`, user , options ).map((response) => {
+       return this.http.post(`${this.baseUrl}/users`, user ).map((response) => {
           return response.json();
         });
     }

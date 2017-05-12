@@ -15,10 +15,7 @@ export class PostsService {
     }
 
     create(post) {
-      const headers = new Headers({ 'Content-Type' : 'application/json' });
-      const options = new RequestOptions({ headers : headers });
-
-       return this.http.post('http://jsonplaceholder.typicode.com/posts', post , options ).map((response) => {
+        return this.http.post('http://jsonplaceholder.typicode.com/posts', post).map((response) => {
           return response.json();
         });
     }
