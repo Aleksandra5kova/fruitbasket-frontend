@@ -1,5 +1,5 @@
 .row {
-    margin-top:50px;
+    margin-top:25px;
 }
 #loginForm {
    border-radius:0px;
@@ -8,4 +8,21 @@
     padding-left: 0px; 
     padding-right: 0px; 
     border:2px solid #f0ad4e;
+}
+.errors {
+    color: red;
+    margin-top: 5px;
+}
+.border {
+    padding-left: 0px; 
+    padding-right: 0px; 
+    border: 2px solid #eea236;
+    padding-bottom: 30px;
+}
+.page-header {
+    margin-left: 70px;
+    margin-top: 15px;
+}
+.login {
+    border-radius: 0px;
 }

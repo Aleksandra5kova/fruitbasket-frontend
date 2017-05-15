@@ -20,6 +20,8 @@ export class UsersService {
        return this.http.post(`${this.baseUrl}/users`, user ).map((response) => {
           return response.json();
         });
+        /*.catch(error) => {
+        };*/
     }
 
 }

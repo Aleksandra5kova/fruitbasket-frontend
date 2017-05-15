@@ -1,56 +1,110 @@
 <div class="container">
- 
- <div>
-          <h2>Sign Up</h2>
+
+ <div class="row">
+    <div class="col-md-6 col-md-offset-3 border">
+
+          <button class="btn btn-md btn-warning btn-block login" type="Submit">Go To Login Page</button>
+
+          <div class="page-header col-md-9 col-md-offset-1">
+            <h2>Sign Up</h2>
+          </div>
+
           <form #userForm="ngForm" >
-              
+
               <div class="form-group">
                 <div class="col-sm-10 col-md-offset-1">
 
                   <label for="email">Email</label>
-                  <input type="email" id="email" name="email" class="form-control" placeholder="Enter email" required [(ngModel)]="user.email" #email="ngModel"/><br/>
+                  <input type="email" id="email" name="email" class="form-control" placeholder="Enter email" [(ngModel)]="user.email" #email="ngModel" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}" required />
 
                   <div *ngIf="email.errors && (email.dirty || email.touched)">
-                    <div [hidden]="!email.errors.required">
+                    <div class="errors" [hidden]="!email.errors.required">
                       Email is required
                     </div>
-                  </div>
+                    <div class="errors" [hidden]="email.valid">
+                      Email is not valid.
+                    </div>
+                  </div><br/>
 
                 </div>
               </div>
-              <!--<div class="form-group">
+
+
+              <div class="form-group">
                 <div class="col-sm-10 col-md-offset-1">
                   <label for="username">Username</label>
-                  <input type="text" id="username" name="username" class="form-control" placeholder="Enter username" [(ngModel)]="user.username"/><br/>
+                  <input type="text" id="username" name="username" class="form-control" placeholder="Enter username" [(ngModel)]="user.username" #username="ngModel" required minlength="6" maxlength="32"/>
+
+                  <div *ngIf="username.errors && (username.dirty || username.touched)">
+                    <div class="errors" [hidden]="!username.errors.required">
+                      Username is required.
+                    </div>
+                    <div class="errors" [hidden]="!username.errors.minlength">
+                      Username must be at least 6 characters long.
+                    </div>
+                    <div class="errors" [hidden]="!username.errors.maxlength">
+                      Username cannot be more than 32 characters long.
+                    </div>
+                  </div>
+                  <div class = "errors" *ngIf="errors.fieldName=='username' && errors.defaultMessage=='DuplicateUsername'">
+                        Duplicate username
+                  </div><br/>
+                  
                 </div>
               </div>
+
+
               <div class="form-group">
                   <div class="col-sm-10 col-md-offset-1">
                     <label for="password">Password</label>
-                    <input type="password" id="password" name="password" class="form-control" placeholder="Enter password" [(ngModel)]="user.password"/><br/>
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Enter password" [(ngModel)]="user.password" #password="ngModel" required minlength="8" maxlength="32"/>
+
+                    <div *ngIf="password.errors && (password.dirty || password.touched)">
+                        <div class="errors" [hidden]="!password.errors.required">
+                          Password is required.
+                        </div>
+                        <div class="errors" [hidden]="!password.errors.minlength">
+                          Password must be at least 8 characters long.
+                        </div>
+                        <div class="errors" [hidden]="!password.errors.maxlength">
+                          Password cannot be more than 32 characters long.
+                        </div>
+                    </div><br/>
+
                   </div>
               </div>
+            
               <div class="form-group">
                 <div class="col-sm-10 col-md-offset-1">
                   <label for="passwordConfirm">Password Confirmation</label>
-                  <input type="password" id="passwordConfirm" name="passwordConfirm" class="form-control" placeholder="Confirm password" [(ngModel)]="user.passwordConfirm"/><br/>
-                </div>
-              </div>-->
-              
-              
-              <!--<div class="form-group">
-                  <div class="col-sm-10 col-md-offset-1"><br/>
-                      <button type="submit" class="btn btn-primary btn-block" (click)="saveUser()">Sign up</button><br/><br/>
-                  </div>
-              </div> -->
+                  <input type="password" id="passwordConfirm" name="passwordConfirm" class="form-control" placeholder="Confirm password" [(ngModel)]="user.passwordConfirm" #passwordConfirm="ngModel" required minlength="8" maxlength="32"/>
 
-               <!--<button type="submit" class="btn btn-default" [disabled]="!loginForm.form.valid">Submit</button>-->
-               <div class="form-group">
-                <div class="col-sm-10 col-md-offset-1">
-                    <button type="submit" class="btn btn-default" [disabled]="!userForm.form.valid" (click)="saveUser()">Submit</button>
+                  <div *ngIf="passwordConfirm.errors && (passwordConfirm.dirty || passwordConfirm.touched)">
+                      <div class="errors" [hidden]="!passwordConfirm.errors.required">
+                          Password confirmation is required.
+                      </div>
+                      <div class="errors" [hidden]="!passwordConfirm.errors.minlength">
+                          Password confirmation must be at least 8 characters long.
+                        </div>
+                        <div class="errors" [hidden]="!passwordConfirm.errors.maxlength">
+                          Password confirmation cannot be more than 32 characters long.
+                        </div>
+                  </div>
+                  <div class = "errors" *ngIf="passwordMismatch">
+                        Passwords must be equal.
+                  </div><br/>
+
                 </div>
               </div>
+
+               <div class="form-group">
+                <div class="col-sm-10 col-md-offset-1"><br/>
+                    <button type="submit" class="btn btn-primary btn-block" [disabled]="!userForm.form.valid" (click)="saveUser()">Sign Up</button>
+                </div>
+              </div>
+
           </form>
+    </div>
   </div>
 </div>
 
