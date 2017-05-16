@@ -26,3 +26,10 @@
 .login {
     border-radius: 0px;
 }
+.back-end-errors {
+    list-style-type: square;
+    padding-left: 20px;
+}
+a {
+    text-decoration: none;
+}

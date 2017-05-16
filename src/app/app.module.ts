@@ -9,6 +9,7 @@ import { PostsFormComponent } from './posts-form.component';
 import { ReactiveFormComponent } from './reactive-form.component';
 import { UsersListComponent } from './users/users-list.component';
 import { UserRegistrationComponent } from './users/users-registration.component';
+import { UsersSignInComponent } from './users/users-login.component';
 // import {UsersComponent } from './users/users.component';
 
 import { PostsService } from './posts.service';
@@ -23,7 +24,8 @@ import { routing } from './app.routes';
     PostsFormComponent,
     ReactiveFormComponent,
     UsersListComponent,
-    UserRegistrationComponent
+    UserRegistrationComponent, 
+    UsersSignInComponent
     // UsersComponent
   ],
   imports: [

@@ -9,11 +9,8 @@ import { UsersService } from './users.service';
 })
 export class UserRegistrationComponent {
 
+  errors = null;
   users;
-  errors = {
-    fieldName: '',
-    defaultMessage: ''
-  };
   user = {
     email: '',
     username: '',
@@ -21,6 +18,8 @@ export class UserRegistrationComponent {
     passwordConfirm: '',
   };
   passwordMismatch = false;
+  usernameExist = false;
+  emailExist = false;
 
   constructor(private usersService: UsersService){}
 
@@ -30,7 +29,6 @@ export class UserRegistrationComponent {
         this.passwordMismatch = false;
         this.usersService.saveUser(this.user).subscribe(errors => {
           this.errors = errors;
-          console.log(this.errors[0])
         });
 
       } else {
@@ -41,6 +39,18 @@ export class UserRegistrationComponent {
       this.user.username = '';
       this.user.password = '';
       this.user.passwordConfirm = '';*/
+    }
+
+    checkUsername() {
+       this.usersService.checkUsername(this.user.username).subscribe(usernameExist => {
+         this.usernameExist = usernameExist;
+       });
+    }
+
+    checkEmail() {
+       this.usersService.checkEmail(this.user.email).subscribe(emailExist => {
+         this.emailExist = emailExist;
+       });
     }
 
 }

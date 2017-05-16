@@ -24,4 +24,23 @@ export class UsersService {
         };*/
     }
 
+    checkUsername(username){
+      return this.http.post(`${this.baseUrl}/checkUsername`, username).map((response) => {
+          return response.json();
+      });
+    }
+
+    checkEmail(email){
+      return this.http.post(`${this.baseUrl}/checkEmail`, email).map((response) => {
+          return response.json();
+      });
+    }
+
+    loginUser(user){
+      console.log(user);
+      return this.http.post(`${this.baseUrl}/loginUser`, user ).map((response) => {
+        return response.json();
+      });
+    }
+
 }

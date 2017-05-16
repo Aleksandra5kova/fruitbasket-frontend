@@ -3,7 +3,7 @@
  <div class="row">
     <div class="col-md-6 col-md-offset-3 border">
 
-          <button class="btn btn-md btn-warning btn-block login" type="Submit">Go To Login Page</button>
+          <a [routerLink]="['/users-sign-in']"><button class="btn btn-md btn-warning btn-block login" type="Submit">Go To Login Page</button></a>
 
           <div class="page-header col-md-9 col-md-offset-1">
             <h2>Sign Up</h2>
@@ -16,6 +16,7 @@
 
                   <label for="email">Email</label>
                   <input type="email" id="email" name="email" class="form-control" placeholder="Enter email" [(ngModel)]="user.email" #email="ngModel" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}" required />
+                  <button type="button" class="btn btn-link pull-right" (click)="checkEmail()">Check Email Availability.</button>
 
                   <div *ngIf="email.errors && (email.dirty || email.touched)">
                     <div class="errors" [hidden]="!email.errors.required">
@@ -24,7 +25,10 @@
                     <div class="errors" [hidden]="email.valid">
                       Email is not valid.
                     </div>
-                  </div><br/>
+                  </div>
+                  <div class="errors" [hidden]="!emailExist">
+                      Email already exist. 
+                   </div><br/>
 
                 </div>
               </div>
@@ -34,6 +38,7 @@
                 <div class="col-sm-10 col-md-offset-1">
                   <label for="username">Username</label>
                   <input type="text" id="username" name="username" class="form-control" placeholder="Enter username" [(ngModel)]="user.username" #username="ngModel" required minlength="6" maxlength="32"/>
+                  <button type="button" class="btn btn-link pull-right" (click)="checkUsername()">Check Username Availability.</button>
 
                   <div *ngIf="username.errors && (username.dirty || username.touched)">
                     <div class="errors" [hidden]="!username.errors.required">
@@ -46,9 +51,10 @@
                       Username cannot be more than 32 characters long.
                     </div>
                   </div>
-                  <div class = "errors" *ngIf="errors.fieldName=='username' && errors.defaultMessage=='DuplicateUsername'">
-                        Duplicate username
-                  </div><br/>
+                  <div class="errors" [hidden]="!usernameExist">
+                      Username already exist. 
+                   </div>
+                  <br/>
                   
                 </div>
               </div>
@@ -94,6 +100,17 @@
                         Passwords must be equal.
                   </div><br/>
 
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="col-sm-10 col-md-offset-1">
+                  <div class="alert alert-danger" *ngIf="errors!=null">
+                    <h4>Errors</h4>
+                    <ul class="back-end-errors">
+                        <li *ngFor="let error of errors">{{error.defaultMessage}}</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
 

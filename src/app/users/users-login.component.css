@@ -1,0 +1,22 @@
+.border {
+    padding-left: 0px; 
+    padding-right: 0px; 
+    border: 2px solid #eea236;
+    padding-bottom: 30px;
+}
+.register {
+    border-radius: 0px;
+}
+.row {
+    margin-top:25px;
+}
+.page-header {
+    margin-left: 70px;
+    margin-top: 15px;
+}
+img {
+    margin-top: 30px;
+}
+a {
+    text-decoration: none;
+}
