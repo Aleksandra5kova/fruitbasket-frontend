@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, RequestOptions } from '@angular/http';
+import { Http, Headers, RequestOptions, RequestMethod } from '@angular/http';
 
 import 'rxjs/add/operator/map';
 
 @Injectable()
 export class UsersService {
 
-  baseUrl = 'http://localhost:8080';
+  baseUrl = '/api';
 
   constructor(private http: Http){}
 
@@ -36,11 +36,17 @@ export class UsersService {
       });
     }
 
-    loginUser(user){
-      console.log(user);
-      return this.http.post(`${this.baseUrl}/loginUser`, user ).map((response) => {
+    loginUser1(username, password){
+      
+    
+       const headers = new Headers();
+       headers.append('Content-Type', 'application/json; charset=UTF-8');
+       headers.append('Authorization', 'Basic' + btoa(username + ':' + password));
+
+      return this.http.post(`${this.baseUrl}/authenticate`, { 'login': username, 'password': password }, { headers : headers } ).map((response) => {
+        console.log('post auth respose' + response);
         return response.json();
       });
     }
-
 }
+  

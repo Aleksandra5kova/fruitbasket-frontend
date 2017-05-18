@@ -18,8 +18,10 @@ export class UsersSignInComponent {
 
     loginUser() {
         console.log(this.user.username);
-        this.usersService.loginUser(this.user).subscribe(user => {
+        console.log(this.user.password);
+        this.usersService.loginUser1(this.user.username, this.user.password).subscribe(user => {
             this.user = user;
         });
+
     }
 }
