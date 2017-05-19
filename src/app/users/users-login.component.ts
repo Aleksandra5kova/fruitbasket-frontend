@@ -17,8 +17,6 @@ export class UsersSignInComponent {
     constructor(private usersService: UsersService){}
 
     loginUser() {
-        console.log(this.user.username);
-        console.log(this.user.password);
         this.usersService.loginUser1(this.user.username, this.user.password).subscribe(user => {
             this.user = user;
         });

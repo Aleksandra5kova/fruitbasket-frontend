@@ -37,16 +37,18 @@ export class UsersService {
     }
 
     loginUser1(username, password){
-      
-    
+
+       const creds = 'username=' + username + '&password=' + password;
+
        const headers = new Headers();
-       headers.append('Content-Type', 'application/json; charset=UTF-8');
+       headers.append('Content-Type', 'application/x-www-form-urlencoded');
        headers.append('Authorization', 'Basic' + btoa(username + ':' + password));
 
-      return this.http.post(`${this.baseUrl}/authenticate`, { 'login': username, 'password': password }, { headers : headers } ).map((response) => {
+      return this.http.post(`${this.baseUrl}/authenticate`, creds, { headers : headers } ).map((response) => {
         console.log('post auth respose' + response);
         return response.json();
       });
+
     }
 }
-  
+
