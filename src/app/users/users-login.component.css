@@ -20,3 +20,10 @@ img {
 a {
     text-decoration: none;
 }
+.errors {
+    color: red;
+    margin-top: 5px;
+}
+.alert {
+    margin-top: 15px;
+}

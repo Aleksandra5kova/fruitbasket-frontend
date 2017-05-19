@@ -14,31 +14,40 @@ export class UserRegistrationComponent {
   user = {
     email: '',
     username: '',
-    password: '',
-    passwordConfirm: '',
+    password: ''
   };
+  passwordConfirmation = '';
   passwordMismatch = false;
   usernameExist = false;
   emailExist = false;
+  error = null;
+  errorDesc = '';
 
   constructor(private usersService: UsersService){}
 
   saveUser() {
-      
-      if( this.user.password == this.user.passwordConfirm ){
+
+      if( this.user.password == this.passwordConfirmation ){
         this.passwordMismatch = false;
         this.usersService.saveUser(this.user).subscribe(errors => {
           this.errors = errors;
+          this.error = false;
+          this.errorDesc = '';
+
+        }, error => {
+          console.log(error);
+
+          if(error.status != 0){
+            this.error = true;
+            this.errorDesc = 'Internal server error.';            
+          }
+
         });
 
       } else {
         this.passwordMismatch = true;
       }
 
-      /*this.user.email = '';
-      this.user.username = '';
-      this.user.password = '';
-      this.user.passwordConfirm = '';*/
     }
 
     checkUsername() {

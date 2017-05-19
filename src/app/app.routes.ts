@@ -8,7 +8,7 @@ import { UserRegistrationComponent } from './users/users-registration.component'
 import { UsersSignInComponent } from './users/users-login.component';
 
 const appRoutes: Routes = [
-    { path: '', redirectTo: 'post-list', pathMatch: 'full' },
+    { path: '', redirectTo: 'users-sign-in', pathMatch: 'full' },
     { path: 'post-list', component: PostsListComponent },
     { path: 'post-form', component: PostsFormComponent},
     { path: 'reactive-form', component: ReactiveFormComponent },

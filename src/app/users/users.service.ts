@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, RequestMethod } from '@angular/http';
 
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 
 @Injectable()
 export class UsersService {
@@ -17,11 +18,11 @@ export class UsersService {
   }
 
    saveUser(user) {
-       return this.http.post(`${this.baseUrl}/users`, user ).map((response) => {
+       return this.http.post(`${this.baseUrl}/register`, user ).map((response) => {
           return response.json();
+        }).catch((error) => {
+          throw error;
         });
-        /*.catch(error) => {
-        };*/
     }
 
     checkUsername(username){
@@ -36,7 +37,7 @@ export class UsersService {
       });
     }
 
-    loginUser1(username, password){
+    loginUser(username, password){
 
        const creds = 'username=' + username + '&password=' + password;
 
@@ -44,9 +45,12 @@ export class UsersService {
        headers.append('Content-Type', 'application/x-www-form-urlencoded');
        headers.append('Authorization', 'Basic' + btoa(username + ':' + password));
 
-      return this.http.post(`${this.baseUrl}/authenticate`, creds, { headers : headers } ).map((response) => {
+      return this.http.post(`${this.baseUrl}/login`, creds, { headers : headers } ).map((response) => {
         console.log('post auth respose' + response);
         return response.json();
+      })
+      .catch((error) => {
+        throw error;
       });
 
     }
