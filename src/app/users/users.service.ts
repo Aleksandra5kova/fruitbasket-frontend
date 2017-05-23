@@ -45,8 +45,7 @@ export class UsersService {
        headers.append('Content-Type', 'application/x-www-form-urlencoded');
        headers.append('Authorization', 'Basic' + btoa(username + ':' + password));
 
-      return this.http.post(`${this.baseUrl}/login`, creds, { headers : headers } ).map((response) => {
-        console.log('post auth respose' + response);
+      return this.http.post(`${this.baseUrl}/authenticate`, creds, { headers : headers } ).map((response) => {
         return response.json();
       })
       .catch((error) => {

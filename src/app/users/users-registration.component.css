@@ -1,12 +1,12 @@
 .row {
-    margin-top:25px;
+    margin-top:90px;
 }
 #loginForm {
    border-radius:0px;
 }
 #border{
-    padding-left: 0px; 
-    padding-right: 0px; 
+    padding-left: 0px;
+    padding-right: 0px;
     border:2px solid #f0ad4e;
 }
 .errors {
@@ -14,8 +14,8 @@
     margin-top: 5px;
 }
 .border {
-    padding-left: 0px; 
-    padding-right: 0px; 
+    padding-left: 0px;
+    padding-right: 0px;
     border: 2px solid #eea236;
     padding-bottom: 30px;
 }

@@ -1,8 +1,22 @@
+<nav class="navbar navbar-inverse" style="border-radius:0px">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" [routerLink]="['/welcome']">Welcome</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a [routerLink]="['/users-list']">Users</a></li>
+      <li><a [routerLink]="['/orders']">Orders</a></li>
+    </ul>
+  </div>
+</nav>
+
 <div class="container">
 
   <div class="row">
     <div class="col-md-12">
-      <h1>List Of Users</h1>
+      <div class="page-header">
+        <h2>Users</h2>
+      </div>
       <table class="table table-striped">
             <thead>
                 <th class="text-center">Firstname</th>

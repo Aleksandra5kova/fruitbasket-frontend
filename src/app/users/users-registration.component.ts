@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { UsersService } from './users.service';
 
@@ -23,7 +24,8 @@ export class UserRegistrationComponent {
   error = null;
   errorDesc = '';
 
-  constructor(private usersService: UsersService){}
+  constructor(private router: Router,
+              private usersService: UsersService){}
 
   saveUser() {
 
@@ -34,14 +36,14 @@ export class UserRegistrationComponent {
           this.error = false;
           this.errorDesc = '';
 
+          this.router.navigate(['/users-sign-in']);
+
         }, error => {
           console.log(error);
-
           if(error.status != 0){
             this.error = true;
-            this.errorDesc = 'Internal server error.';            
+            this.errorDesc = 'Internal server error.';
           }
-
         });
 
       } else {

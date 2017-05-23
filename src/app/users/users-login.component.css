@@ -1,6 +1,6 @@
 .border {
-    padding-left: 0px; 
-    padding-right: 0px; 
+    padding-left: 0px;
+    padding-right: 0px;
     border: 2px solid #eea236;
     padding-bottom: 30px;
 }
@@ -8,7 +8,7 @@
     border-radius: 0px;
 }
 .row {
-    margin-top:25px;
+    margin-top:70px;
 }
 .page-header {
     margin-left: 70px;
