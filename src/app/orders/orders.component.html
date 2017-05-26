@@ -1,14 +1,4 @@
-<nav class="navbar navbar-inverse" style="border-radius:0px">
-  <div class="container">
-    <div class="navbar-header">
-      <a class="navbar-brand" [routerLink]="['/welcome']">Welcome</a>
-    </div>
-    <ul class="nav navbar-nav">
-      <!--<li><a [routerLink]="['/users-list']">Users</a></li>-->
-      <li><a [routerLink]="['/orders']">Orders</a></li>
-    </ul>
-  </div>
-</nav>
+<app-menu></app-menu>
 
 <div class="container">
   <div class="row">
@@ -19,84 +9,10 @@
 
       <div class="row">
         <div class="col-md-5">
-          <h4>New Order</h4><br/>
-          <div class="row">
-            <div class="col-md-10">
-              <form>
-                  <div class="form-group">
-                    <label for="orderNoInput">Order No.</label>
-                    <input [(ngModel)]="order.orderNo" name="orderNo" type="text" class="form-control" id="orderNoInput"/>
-                  </div>
-                  
-                   <div class="form-group">
-                    <label for="supplierInput">Supplier</label>
-                    <select [(ngModel)]="order.supplier" name="supplier" class="form-control" >
-                      <option *ngFor="let s of suppliers" [ngValue]="s">{{s.name}}</option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label for="issueDateInput">Issue Date</label>
-                    <input [(ngModel)]="order.issueDate" name="issueDate" type="date" class="form-control" id="issueDateInput" placeholder="Issue Date" />
-                  </div>
-                  <div class="form-group">
-                    <label for="paymentDateInput">Payment Date</label>
-                    <input [(ngModel)]="order.paymentDate" name="paymentDate" type="date" class="form-control" id="paymentDateInput" placeholder="Payment Date" />
-                  </div>
-                  <div class="form-check">
-                    <label class="form-check-label">
-                      <input id="hasDeliveyInput" [(ngModel)]="order.hasDelivey" name="hasDelivey" type="checkbox" class="form-check-input">
-                      Check for delivery
-                    </label>
-                  </div>
-                  <div class="form-group" *ngIf="order.hasDelivey">
-                    <label for="deliveryDateInput">Delivery Date</label>
-                    <input [(ngModel)]="order.deliveryDate" name="deliveryDate" type="datetime-local" class="form-control" id="deliveryDateInput" placeholder="Delivery Date" />
-                  </div>
-                  
-                   <div class="form-group">
-                    <div class="buttons col-md-offset-6 col-md-6"><br/>
-                         <button type="submit" class="btn btn-primary" (click)="saveOrder()" >Submit</button>&nbsp;
-                         <button type="submit" class="btn btn-warning" (click)="clearForm()">Cancel</button> 
-                    </div>
-                  </div>
-              </form>
-            </div>
-          </div>
+          <app-order-form></app-order-form>
         </div>
         <div class="col-md-7">
-          <h4>Table with my orders</h4><br/>
-
-          <table class="table table-striped table-bordered">
-            <thead>
-              <tr>
-                <th class="text-center">Order No.</th>
-                <th class="text-center">Supplier Name</th>
-                <th class="vertical-align text-center">Issue Date</th>
-                <th class="text-center">Payment Date</th>
-                <th class="vertical-align text-center">Delivery</th>
-                <th class="text-center">Delivery Date</th>
-                <th>&nbsp;</th>
-                <th>&nbsp;</th>
-              </tr>
-            </thead>
-            <tbody>
-               <tr *ngFor="let order of orders">
-                    <td class="text text-center">{{order.orderNo}}</td>
-                    <td class="text text-center">{{order.supplier.name}}</td>
-                    <td class="text text-center">{{order.issueDate | date: 'MM/dd/yyyy'}}</td>
-                    <td class="text text-center">{{order.paymentDate | date: 'MM/dd/yyyy'}}</td>
-                    <td class="text text-center">{{order.hasDelivey}}</td>
-                    <td class="text text-center">{{order.deliveryDate | date: 'MM/dd/yyyy'}}</td>
-                    <td class="text-center">
-                      <button type="submit" class="btn btn-warning">Edit</button>
-                    </td>
-                    <td class="text-center">
-                      <button type="submit" class="btn btn-danger">Delete</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
+          <app-order-list></app-order-list>
         </div>
       </div>
 

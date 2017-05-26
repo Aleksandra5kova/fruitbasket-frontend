@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { UsersListComponent } from './users/users-list.component';
@@ -9,6 +10,10 @@ import { UserRegistrationComponent } from './users/users-registration.component'
 import { UsersSignInComponent } from './users/users-login.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { OrdersComponent } from './orders/orders.component';
+import { OrderListComponent } from './orders/list/oder-list.component';
+import { OrderFormComponent } from './orders/form/order-form.component';
+import { MenuComponent } from './menu/menu.component';
+import { DeleteDialogComponent } from './orders/list/delete-dialog/delete-dialog.component';
 
 import { UsersService } from './users/users.service';
 import { AuthService } from './users/auth.service';
@@ -25,12 +30,17 @@ import { routing } from './app.routes';
     UserRegistrationComponent,
     UsersSignInComponent,
     WelcomeComponent,
-    OrdersComponent
+    OrdersComponent,
+    OrderListComponent,
+    OrderFormComponent,
+    MenuComponent,
+    DeleteDialogComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,
     HttpModule,
     routing
   ],

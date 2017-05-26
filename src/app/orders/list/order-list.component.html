@@ -1,0 +1,41 @@
+
+          <h4>Table with my orders</h4><br/>
+
+          <table class="table table-striped table-bordered">
+            <thead>
+              <tr>
+                <th class="text-center">Order No.</th>
+                <th class="text-center">Supplier Name</th>
+                <th class="vertical-align text-center">Issue Date</th>
+                <th class="text-center">Payment Date</th>
+                <th class="vertical-align text-center">Delivery</th>
+                <th class="text-center">Delivery Date</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+              </tr>
+            </thead>
+            <tbody>
+               <tr *ngFor="let order of orders">
+                    <td class="text text-center">{{order.orderNo}}</td>
+                    <td class="text text-center">{{order.supplier.name}}</td>
+                    <td class="text text-center">{{order.issueDate | date: 'MM/dd/yyyy'}}</td>
+                    <td class="text text-center">{{order.paymentDate | date: 'MM/dd/yyyy'}}</td>
+                    <td class="text text-center">{{order.hasDelivey}}</td>
+                    <td class="text text-center">{{order.deliveryDate | date: 'MM/dd/yyyy'}}</td>
+                    <td class="text-center">
+                      <button type="submit" class="btn btn-warning" (click)="editButton(order)">Edit</button>
+                    </td>
+                    <td class="text-center">
+                      <button type="submit" class="btn btn-danger" (click)="deleteButton(order)">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <app-delete-dialog [(visible)]="showDialog" class="text-center">
+            <h1>Are you sure?</h1>
+            <div class="text-center buttons">
+              <button class="btn btn-lg btn-primary" (click)="deleteOrder()">Yes</button>
+              <button class="btn btn-lg btn-danger" (click)="cancelButton()">No</button>
+            </div>
+        </app-delete-dialog>

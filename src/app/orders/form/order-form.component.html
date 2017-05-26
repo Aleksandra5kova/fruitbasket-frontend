@@ -1,0 +1,43 @@
+          <h4>New Order</h4><br/>
+          <div class="row">
+            <div class="col-md-10">
+              <form>
+                  <div class="form-group">
+                    <label for="orderNoInput">Order No.</label>
+                    <input [(ngModel)]="order.orderNo" name="orderNo" type="text" class="form-control" id="orderNoInput"/>
+                  </div>
+
+                   <div class="form-group">
+                    <label for="supplierInput">Supplier</label>
+                    <select [(ngModel)]="order.supplier" name="supplier" class="form-control" >
+                      <option *ngFor="let s of suppliers" [ngValue]="s">{{s.name}}</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="issueDateInput">Issue Date</label>
+                    <input [(ngModel)]="order.issueDate" name="issueDate" type="date" class="form-control" id="issueDateInput" placeholder="Issue Date" />
+                  </div>
+                  <div class="form-group">
+                    <label for="paymentDateInput">Payment Date</label>
+                    <input [(ngModel)]="order.paymentDate" name="paymentDate" type="date" class="form-control" id="paymentDateInput" placeholder="Payment Date" />
+                  </div>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input id="hasDeliveyInput" [(ngModel)]="order.hasDelivey" name="hasDelivey" type="checkbox" class="form-check-input">
+                      Check for delivery
+                    </label>
+                  </div>
+                  <div class="form-group" *ngIf="order.hasDelivey">
+                    <label for="deliveryDateInput">Delivery Date</label>
+                    <input [(ngModel)]="order.deliveryDate" name="deliveryDate" type="datetime-local" class="form-control" id="deliveryDateInput" placeholder="Delivery Date" />
+                  </div>
+
+                   <div class="form-group">
+                    <div class="buttons col-md-offset-6 col-md-6"><br/>
+                         <button type="submit" class="btn btn-primary" (click)="saveOrder()" >Submit</button>&nbsp;
+                         <button type="submit" class="btn btn-warning" (click)="clearForm()">Cancel</button>
+                    </div>
+                  </div>
+              </form>
+            </div>
+          </div>
