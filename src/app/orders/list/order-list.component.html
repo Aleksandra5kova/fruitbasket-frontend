@@ -15,7 +15,7 @@
               </tr>
             </thead>
             <tbody>
-               <tr *ngFor="let order of orders">
+               <tr *ngFor="let order of orders; let i of index">
                     <td class="text text-center">{{order.orderNo}}</td>
                     <td class="text text-center">{{order.supplier.name}}</td>
                     <td class="text text-center">{{order.issueDate | date: 'MM/dd/yyyy'}}</td>

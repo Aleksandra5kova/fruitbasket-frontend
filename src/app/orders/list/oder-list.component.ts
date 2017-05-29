@@ -30,6 +30,9 @@ export class OrderListComponent implements OnInit {
       ordersService.orderDelete$.subscribe(id => {
         this.getOrders();
       });
+      ordersService.cancelChange$.subscribe(order => {
+        this.getOrders();
+      });
    }
 
    ngOnInit() {
@@ -56,7 +59,7 @@ export class OrderListComponent implements OnInit {
     this.showDialog = false;
   }
 
-  editButton(order){
+  editButton(order) {
     this.ordersService.editOrder(order);
   }
 

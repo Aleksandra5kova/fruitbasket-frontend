@@ -6,11 +6,10 @@
                     <label for="orderNoInput">Order No.</label>
                     <input [(ngModel)]="order.orderNo" name="orderNo" type="text" class="form-control" id="orderNoInput"/>
                   </div>
-
                    <div class="form-group">
                     <label for="supplierInput">Supplier</label>
-                    <select [(ngModel)]="order.supplier" name="supplier" class="form-control" >
-                      <option *ngFor="let s of suppliers" [ngValue]="s">{{s.name}}</option>
+                    <select class="form-control" [(ngModel)]="selectedSupplier.id" [ngModelOptions]="{standalone: true}">
+                      <option *ngFor="let supplier of suppliers" value={{supplier.id}} >{{supplier.name}}</option>
                     </select>
                   </div>
                   <div class="form-group">
@@ -23,18 +22,27 @@
                   </div>
                   <div class="form-check">
                     <label class="form-check-label">
-                      <input id="hasDeliveyInput" [(ngModel)]="order.hasDelivey" name="hasDelivey" type="checkbox" class="form-check-input">
+                      <input id="hasDeliveyInput" [(ngModel)]="deliveryFlag" name="hasDelivey" type="checkbox" class="form-check-input">
                       Check for delivery
                     </label>
                   </div>
-                  <div class="form-group" *ngIf="order.hasDelivey">
+                  <div class="form-group" *ngIf="deliveryFlag">
                     <label for="deliveryDateInput">Delivery Date</label>
                     <input [(ngModel)]="order.deliveryDate" name="deliveryDate" type="datetime-local" class="form-control" id="deliveryDateInput" placeholder="Delivery Date" />
                   </div>
 
+                  <div class="form-group">
+                    <div class="col-sm-12 alert alert-danger" *ngIf="errorsCounter != 0">
+                      <h4>Errors</h4>
+                      <ul>
+                        <li *ngFor="let error of errors"> {{error}} </li>
+                      </ul>
+                    </div>
+                  </div>
+
                    <div class="form-group">
                     <div class="buttons col-md-offset-6 col-md-6"><br/>
-                         <button type="submit" class="btn btn-primary" (click)="saveOrder()" >Submit</button>&nbsp;
+                         <button type="submit" class="btn btn-primary" (click)="saveOrder()">Submit</button>&nbsp;
                          <button type="submit" class="btn btn-warning" (click)="clearForm()">Cancel</button>
                     </div>
                   </div>

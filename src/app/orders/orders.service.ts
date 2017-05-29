@@ -8,10 +8,12 @@ export class OrdersService {
    private orderFormSource = new Subject<string>();
    private orderDeleteSource = new Subject<string>();
    private orderEditSource = new Subject<string>();
+   private cancelChangeSource = new Subject<string>();
 
    orderForm$ = this.orderFormSource.asObservable();
    orderDelete$ = this.orderDeleteSource.asObservable();
    orderEdit$ = this.orderEditSource.asObservable();
+   cancelChange$ = this.cancelChangeSource.asObservable();
 
    baseUrl = '/api';
 
@@ -36,8 +38,12 @@ export class OrdersService {
      });
    }
 
-   editOrder(order){
+   editOrder(order) {
     this.orderEditSource.next(order);
+   }
+
+   cancelChange(order) {
+    this.cancelChangeSource.next(order);
    }
 
 }

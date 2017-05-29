@@ -5,3 +5,6 @@
   padding-left:40px;
   padding-right: 0px;
 }
+.alert-danger h4 {
+  margin-left:25px;
+}
