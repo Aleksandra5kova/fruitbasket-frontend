@@ -15,7 +15,8 @@ export class UserRegistrationComponent {
   user = {
     email: '',
     username: '',
-    password: ''
+    password: '',
+    language: 'en'
   };
   passwordConfirmation = '';
   passwordMismatch = false;
@@ -23,26 +24,35 @@ export class UserRegistrationComponent {
   emailExist = false;
   error = null;
   errorDesc = '';
+  languages = [
+    { value: 'en', display: 'English' },
+    { value: 'mk', display: 'Македонски' }
+  ];
 
   constructor(private router: Router,
               private usersService: UsersService){}
 
   saveUser() {
 
-      if( this.user.password == this.passwordConfirmation ){
+      this.checkUsername();
+      this.checkEmail();
+
+      if( this.user.password == this.passwordConfirmation){
         this.passwordMismatch = false;
         this.usersService.saveUser(this.user).subscribe(errors => {
           this.errors = errors;
           this.error = false;
           this.errorDesc = '';
 
-          this.router.navigate(['/users-sign-in']);
+          if(!this.usernameExist && !this.emailExist){
+              this.router.navigate(['/users-sign-in']);
+          }
 
         }, error => {
           console.log(error);
           if(error.status != 0){
             this.error = true;
-            this.errorDesc = 'Internal server error.';
+            this.errorDesc = 'internalServerError';
           }
         });
 

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { UsersService } from './users.service';
+import { TranslateService } from '../translate/translate.service';
 
 @Component({
     selector: 'app-user-signin',
@@ -11,32 +12,42 @@ import { UsersService } from './users.service';
 export class UsersSignInComponent {
 
     user = {
-        username: '',
-        password: ''
+       email: '',
+       username: '',
+       password: '',
+       language: ''
     };
     error = null;
     errorDesc = '';
 
     constructor(private router: Router,
-                private usersService: UsersService){}
+                private usersService: UsersService,
+                private _translate: TranslateService){}
 
     loginUser() {
-        this.usersService.loginUser(this.user.username, this.user.password).subscribe(user => {
-            this.user = user;
-        }, error => {
+        this.usersService.loginUser(this.user.username, this.user.password).subscribe(user => {},
+        error => {
             console.log(error);
-            if(error.status == 0){
+            if(error.status == 0) {
                 this.error = false;
                 this.errorDesc = '';
+                this.setCurrentUser();
                 this.router.navigate(['/welcome']);
             } else if(error.status == 500){
                 this.error = true;
-                this.errorDesc = 'Incorrect username or password.';
+                this.errorDesc = 'incorrectUsernameOrPassword';
             } else {
                 this.error = true;
-                this.errorDesc = 'Internal server error.';
+                this.errorDesc = 'internalServerError';
             }
         });
-
     }
+
+    setCurrentUser() {
+        this.usersService.getCurrentUser().subscribe(user => {
+             this.user = user;
+             this._translate.use(this.user.language);
+        });
+    }
+
 }

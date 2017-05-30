@@ -20,6 +20,9 @@ import { AuthService } from './users/auth.service';
 import { OrdersService } from './orders/orders.service';
 import { CanActivateViaAuthGuard } from './users/auth-guard.service';
 import { SuppliersService } from './suppliers/suppliers.service';
+import { TRANSLATION_PROVIDERS } from './translate/translations';
+import { TranslateService } from './translate/translate.service';
+import { TranslatePipe } from './translate/translate.pipe';
 
 import { routing } from './app.routes';
 
@@ -34,7 +37,8 @@ import { routing } from './app.routes';
     OrderListComponent,
     OrderFormComponent,
     MenuComponent,
-    DeleteDialogComponent
+    DeleteDialogComponent,
+    TranslatePipe
   ],
   imports: [
     BrowserModule,
@@ -49,7 +53,9 @@ import { routing } from './app.routes';
     AuthService,
     OrdersService,
     SuppliersService,
-    CanActivateViaAuthGuard
+    CanActivateViaAuthGuard, 
+    TRANSLATION_PROVIDERS,
+    TranslateService
   ], // TUKA SE STAVAAT SERVISI KOI NAJCESTO KOMUNICIRAAT SO BACKEND
   bootstrap: [AppComponent]
 })

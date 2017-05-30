@@ -16,6 +16,7 @@
 }
 img {
     margin-top: 30px;
+    margin-left:135px;
 }
 a {
     text-decoration: none;
@@ -26,4 +27,11 @@ a {
 }
 .alert {
     margin-top: 15px;
+}
+.btn-group {
+    margin-top: 20px;
+    margin-right: 20px;
+}
+.active {
+    background-color: #ec971f;
 }

@@ -39,6 +39,7 @@ export class OrderFormComponent implements OnInit {
 
   constructor(private ordersService: OrdersService, private suppliersService: SuppliersService) {
       ordersService.orderEdit$.subscribe(orderEdit => {
+        this.clearForm();
         this.orderEdit = orderEdit;
         if(this.orderEdit.hasDelivey == 'YES') {
           this.deliveryFlag = true;
@@ -62,21 +63,21 @@ export class OrderFormComponent implements OnInit {
     this.errorsCounter = 0;
 
     if(this.order.orderNo == ''){
-      this.errors[this.errorsCounter++] = 'Order No. is required';
+      this.errors[this.errorsCounter++] = 'orderNoRequired';
     }
     if(this.selectedSupplier.id == ''){
-      this.errors[this.errorsCounter++] = 'Supplier is required.';
+      this.errors[this.errorsCounter++] = 'supplierRequired';
     }
     if(this.order.issueDate == ''){
-      this.errors[this.errorsCounter++] = 'Issue Date is required';
+      this.errors[this.errorsCounter++] = 'issueDateRequired';
     }
     if(this.order.paymentDate == ''){
-      this.errors[this.errorsCounter++] = 'Payment Date is required';
+      this.errors[this.errorsCounter++] = 'paymentDateRequired';
     }
     if(this.deliveryFlag == true && ( this.order.deliveryDate == null || this.order.deliveryDate == '')) {
-      this.errors[this.errorsCounter++] = 'Delivery Date is required';
+      this.errors[this.errorsCounter++] = 'deliveryDateRequired';
     }
-    
+
     if(this.errorsCounter == 0) {
       if(this.deliveryFlag == true){
         this.order.hasDelivey = 'YES';

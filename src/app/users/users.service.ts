@@ -37,6 +37,12 @@ export class UsersService {
       });
     }
 
+    getCurrentUser(){
+      return this.http.get(`${this.baseUrl}/currentUser`).map((response) => {
+          return response.json();
+      });
+    }
+
     loginUser(username, password){
 
        const creds = 'username=' + username + '&password=' + password;

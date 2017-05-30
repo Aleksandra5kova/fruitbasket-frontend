@@ -1,11 +1,14 @@
 <nav class="navbar navbar-inverse" style="border-radius:0px">
   <div class="container">
     <div class="navbar-header">
-      <a class="navbar-brand" [routerLink]="['/welcome']">Welcome</a>
+      <a class="navbar-brand" [routerLink]="['/welcome']">{{ 'welcome' | translate }}</a>
     </div>
     <ul class="nav navbar-nav">
       <!--<li><a [routerLink]="['/users-list']">Users</a></li>-->
-      <li><a [routerLink]="['/orders']">Orders</a></li>
+      <li><a [routerLink]="['/orders']">{{ 'orders' | translate }}</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li> <p class="navbar-text"> <span class="glyphicon glyphicon-user"></span> Hello, Aleksandra </p> </li>
     </ul>
   </div>
 </nav>

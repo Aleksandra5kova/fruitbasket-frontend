@@ -3,10 +3,10 @@
  <div class="row">
     <div class="col-md-6 col-md-offset-3 border">
 
-          <a [routerLink]="['/users-sign-in']"><button class="btn btn-md btn-warning btn-block login" type="Submit">Go To Login Page</button></a>
+          <a [routerLink]="['/users-sign-in']"><button class="btn btn-md btn-warning btn-block login" type="Submit">{{ 'goToLogin' | translate }}</button></a>
 
           <div class="page-header col-md-9 col-md-offset-1">
-            <h2>Sign Up</h2>
+            <h2>{{ 'registration' | translate }}</h2>
           </div>
 
           <form #userForm="ngForm" >
@@ -14,20 +14,20 @@
               <div class="form-group">
                 <div class="col-sm-10 col-md-offset-1">
 
-                  <label for="email">Email</label>
-                  <input type="email" id="email" name="email" class="form-control" placeholder="Enter email" [(ngModel)]="user.email" #email="ngModel" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}" required />
-                  <button type="button" class="btn btn-link pull-right" (click)="checkEmail()">Check Email Availability.</button>
+                  <label for="email">{{ 'email' | translate }}</label>
+                  <input type="email" id="email" name="email" class="form-control" [(ngModel)]="user.email" #email="ngModel" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}" required />
+                  <button type="button" class="btn btn-link pull-right" (click)="checkEmail()">{{ 'checkEmailAvailability' | translate }}</button>
 
                   <div *ngIf="email.errors && (email.dirty || email.touched)">
                     <div class="errors" [hidden]="!email.errors.required">
-                      Email is required
+                      {{ 'emailRequiered' | translate }}
                     </div>
                     <div class="errors" [hidden]="email.valid">
-                      Email is not valid.
+                      {{ 'emailValid' | translate }}
                     </div>
                   </div>
                   <div class="errors" [hidden]="!emailExist">
-                      Email already exist. 
+                      {{ 'emailExist' | translate }}
                    </div><br/>
 
                 </div>
@@ -36,23 +36,23 @@
 
               <div class="form-group">
                 <div class="col-sm-10 col-md-offset-1">
-                  <label for="username">Username</label>
-                  <input type="text" id="username" name="username" class="form-control" placeholder="Enter username" [(ngModel)]="user.username" #username="ngModel" required minlength="6" maxlength="32"/>
-                  <button type="button" class="btn btn-link pull-right" (click)="checkUsername()">Check Username Availability.</button>
+                  <label for="username">{{ 'username' | translate}}</label>
+                  <input type="text" id="username" name="username" class="form-control" [(ngModel)]="user.username" #username="ngModel" required minlength="6" maxlength="32"/>
+                  <button type="button" class="btn btn-link pull-right" (click)="checkUsername()">{{ 'checkUsernameAvailability' | translate }}</button>
 
                   <div *ngIf="username.errors && (username.dirty || username.touched)">
                     <div class="errors" [hidden]="!username.errors.required">
-                      Username is required.
+                     {{ 'usernameRequiered' | translate }}
                     </div>
                     <div class="errors" [hidden]="!username.errors.minlength">
-                      Username must be at least 6 characters long.
+                      {{ 'usernameMinLength' | translate }}
                     </div>
                     <div class="errors" [hidden]="!username.errors.maxlength">
-                      Username cannot be more than 32 characters long.
+                      {{ 'usernameMaxLength' | translate }}
                     </div>
                   </div>
                   <div class="errors" [hidden]="!usernameExist">
-                      Username already exist. 
+                      {{ 'usernameExist' | translate }} 
                    </div>
                   <br/>
                   
@@ -62,18 +62,18 @@
 
               <div class="form-group">
                   <div class="col-sm-10 col-md-offset-1">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" class="form-control" placeholder="Enter password" [(ngModel)]="user.password" #password="ngModel" required minlength="8" maxlength="32"/>
+                    <label for="password">{{ 'password' | translate}}</label>
+                    <input type="password" id="password" name="password" class="form-control" [(ngModel)]="user.password" #password="ngModel" required minlength="8" maxlength="32"/>
 
                     <div *ngIf="password.errors && (password.dirty || password.touched)">
                         <div class="errors" [hidden]="!password.errors.required">
-                          Password is required.
+                          {{ 'passwordRequiered' | translate }}
                         </div>
                         <div class="errors" [hidden]="!password.errors.minlength">
-                          Password must be at least 8 characters long.
+                          {{ 'passwordMinLength' | translate }}
                         </div>
                         <div class="errors" [hidden]="!password.errors.maxlength">
-                          Password cannot be more than 32 characters long.
+                           {{ 'passwordMaxLength' | translate }} 
                         </div>
                     </div><br/>
 
@@ -82,22 +82,22 @@
             
               <div class="form-group">
                 <div class="col-sm-10 col-md-offset-1">
-                  <label for="passwordConfirm">Password Confirmation</label>
-                  <input type="password" id="passwordConfirm" name="passwordConfirm" class="form-control" placeholder="Confirm password" [(ngModel)]="passwordConfirmation" #passwordConfirm="ngModel" required minlength="8" maxlength="32"/>
+                  <label for="passwordConfirm">{{ 'passwordConfirmation' | translate}}</label>
+                  <input type="password" id="passwordConfirm" name="passwordConfirm" class="form-control" [(ngModel)]="passwordConfirmation" #passwordConfirm="ngModel" required minlength="8" maxlength="32"/>
 
                   <div *ngIf="passwordConfirm.errors && (passwordConfirm.dirty || passwordConfirm.touched)">
                       <div class="errors" [hidden]="!passwordConfirm.errors.required">
-                          Password confirmation is required.
+                          {{ 'passwordConfirmationRequiered' | translate }}
                       </div>
                       <div class="errors" [hidden]="!passwordConfirm.errors.minlength">
-                          Password confirmation must be at least 8 characters long.
+                         {{ 'passwordConfirmationMinLength' | translate }}
                         </div>
                         <div class="errors" [hidden]="!passwordConfirm.errors.maxlength">
-                          Password confirmation cannot be more than 32 characters long.
+                         {{ 'passwordConfirmationMaxLength' | translate }} 
                         </div>
                   </div>
                   <div class = "errors" *ngIf="passwordMismatch">
-                        Passwords must be equal.
+                        {{ 'passwordsEqual' | translate }} 
                   </div><br/>
 
                 </div>
@@ -105,10 +105,22 @@
 
               <div class="form-group">
                 <div class="col-sm-10 col-md-offset-1">
+                  <label>Language</label>
+                  <div class="radio" *ngFor="let language of languages">
+                    <label>
+                      <input type="radio" name="language" [(ngModel)]="user.language" [value]="language.value">
+                      {{language.display}}
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="col-sm-10 col-md-offset-1">
                   <div class="alert alert-danger" *ngIf="errors!= null && errors.length != 0">
-                    <h4>Errors</h4>
+                    <h4>{{ 'errors' | translate }}</h4>
                     <ul class="back-end-errors">
-                        <li *ngFor="let error of errors">{{error.defaultMessage}}</li>
+                        <li *ngFor="let error of errors">{{ error.defaultMessage | translate }}</li>
                     </ul>
                   </div>
                 </div>
@@ -117,14 +129,14 @@
               <div class="form-group">
                 <div class="col-sm-10 col-md-offset-1">
                   <div class="alert alert-danger text-center" *ngIf="error">
-                    <p> {{errorDesc}} </p>
+                    <p> {{ errorDesc | translate }} </p>
                   </div>
                 </div>
               </div>
 
                <div class="form-group">
                 <div class="col-sm-10 col-md-offset-1"><br/>
-                    <button type="submit" class="btn btn-primary btn-block" [disabled]="!userForm.form.valid" (click)="saveUser()">Sign Up</button>
+                    <button type="submit" class="btn btn-primary btn-block" [disabled]="!userForm.form.valid" (click)="saveUser()">{{ 'signUp' | translate }}</button>
                 </div>
               </div>
 

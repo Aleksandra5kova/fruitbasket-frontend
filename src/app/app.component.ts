@@ -1,30 +1,35 @@
 import { Component, OnInit } from '@angular/core';
 
+import { TranslateService } from './translate/translate.service';
+import { UsersService } from './users/users.service';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'app works!';
-  arr = [1, 2, 3];
 
-  constructor() {}
+    currentUser = {
+      email: '',
+      username: '',
+      password: '',
+      language: 'en'
+    };
 
-  ngOnInit() {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
+    constructor(private _translate: TranslateService, 
+                private usersService: UsersService) { }
 
-  }
+    ngOnInit( ) {
 
-  ngOnDestroy() {
-    //Called once, before the instance is destroyed.
-    //Add 'implements OnDestroy' to the class.
-  }
+          this._translate.use(this.currentUser.language);
 
-  customMethods(title) {
-    console.log(title);
-    this.title = 'ASD';
-  }
+          // if the user refreshes the page
+          this.usersService.getCurrentUser().subscribe(currentUser => {
+              this.currentUser = currentUser;
+              this._translate.use(this.currentUser.language);
+          });
+    }
 
+      
 }

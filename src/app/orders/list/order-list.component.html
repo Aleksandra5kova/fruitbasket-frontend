@@ -1,15 +1,15 @@
 
-          <h4>Table with my orders</h4><br/>
+          <h4>{{ 'tableOrder' | translate }}</h4><br/>
 
           <table class="table table-striped table-bordered">
             <thead>
               <tr>
-                <th class="text-center">Order No.</th>
-                <th class="text-center">Supplier Name</th>
-                <th class="vertical-align text-center">Issue Date</th>
-                <th class="text-center">Payment Date</th>
-                <th class="vertical-align text-center">Delivery</th>
-                <th class="text-center">Delivery Date</th>
+                <th class="text-center">{{ 'orderNo' | translate }}</th>
+                <th class="text-center">{{ 'supplier' | translate }}</th>
+                <th class="text-center">{{ 'issueDate' | translate }}</th>
+                <th class="text-center">{{ 'paymentDate' | translate }}</th>
+                <th class="text-center">{{ 'delivery' | translate }}</th>
+                <th class="text-center">{{ 'deliveryDate' | translate }}</th>
                 <th>&nbsp;</th>
                 <th>&nbsp;</th>
               </tr>
@@ -23,19 +23,19 @@
                     <td class="text text-center">{{order.hasDelivey}}</td>
                     <td class="text text-center">{{order.deliveryDate | date: 'MM/dd/yyyy'}}</td>
                     <td class="text-center">
-                      <button type="submit" class="btn btn-warning" (click)="editButton(order)">Edit</button>
+                      <button type="submit" class="btn btn-warning" (click)="editButton(order)">{{ 'edit' | translate }}</button>
                     </td>
                     <td class="text-center">
-                      <button type="submit" class="btn btn-danger" (click)="deleteButton(order)">Delete</button>
+                      <button type="submit" class="btn btn-danger" (click)="deleteButton(order)">{{ 'delete' | translate }}</button>
                     </td>
                 </tr>
             </tbody>
         </table>
 
         <app-delete-dialog [(visible)]="showDialog" class="text-center">
-            <h1>Are you sure?</h1>
+            <h1>{{ 'areYouSure' | translate }}</h1>
             <div class="text-center buttons">
-              <button class="btn btn-lg btn-primary" (click)="deleteOrder()">Yes</button>
-              <button class="btn btn-lg btn-danger" (click)="cancelButton()">No</button>
+              <button class="btn btn-lg btn-primary" (click)="deleteOrder()">{{ 'yes' | translate }}</button>
+              <button class="btn btn-lg btn-danger" (click)="cancelButton()">{{ 'no' | translate }}</button>
             </div>
         </app-delete-dialog>
