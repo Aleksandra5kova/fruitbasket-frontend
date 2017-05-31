@@ -53,7 +53,7 @@ import { routing } from './app.routes';
     AuthService,
     OrdersService,
     SuppliersService,
-    CanActivateViaAuthGuard, 
+    CanActivateViaAuthGuard,
     TRANSLATION_PROVIDERS,
     TranslateService
   ], // TUKA SE STAVAAT SERVISI KOI NAJCESTO KOMUNICIRAAT SO BACKEND

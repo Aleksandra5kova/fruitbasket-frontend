@@ -21,8 +21,4 @@ export class ReactiveFormComponent implements OnInit {
     });
   }
 
-  submitForm() {
-    console.log(this.post.value);
-  }
-
 }

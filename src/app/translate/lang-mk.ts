@@ -54,5 +54,12 @@ export const LANG_MK_TRANS = {
     'paymentDateRequired' : 'Датум на плаќање е задолжително поле.',
     'deliveryDateRequired' : 'Датум на испорака е задолжително поле.',
     'usernameSize' : 'Должината на корисничкото име мора да биде помеѓу 6-32.',
-    'passwordSize' : 'Должината на лозинката мора да биде помеѓу 8-32.'
+    'passwordSize' : 'Должината на лозинката мора да биде помеѓу 8-32.',
+    'hello' : 'Здраво',
+    'signout' : 'Одјава',
+    'itemCategory' : 'Категорија',
+    'itemName' : 'Име',
+    'quantity' : 'Количина',
+    'price' : 'Цена',
+    'id' : 'ИД'
 };

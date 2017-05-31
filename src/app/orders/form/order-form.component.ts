@@ -38,6 +38,7 @@ export class OrderFormComponent implements OnInit {
   errorsCounter = 0;
 
   constructor(private ordersService: OrdersService, private suppliersService: SuppliersService) {
+      // edit order
       ordersService.orderEdit$.subscribe(orderEdit => {
         this.clearForm();
         this.orderEdit = orderEdit;
@@ -57,6 +58,7 @@ export class OrderFormComponent implements OnInit {
      });
   }
 
+  // validate and save order
   saveOrder() {
 
     this.errors = [];
@@ -90,10 +92,9 @@ export class OrderFormComponent implements OnInit {
       this.clearForm();
     }
 
-    console.log(this.order);
-
   }
 
+  // clear the form
   clearForm() {
     this.order = {
       id: '',

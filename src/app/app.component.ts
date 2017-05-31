@@ -17,19 +17,14 @@ export class AppComponent implements OnInit {
       language: 'en'
     };
 
-    constructor(private _translate: TranslateService, 
+    constructor(private _translate: TranslateService,
                 private usersService: UsersService) { }
 
     ngOnInit( ) {
-
-          this._translate.use(this.currentUser.language);
-
-          // if the user refreshes the page
+          //if the user refreshes the page
           this.usersService.getCurrentUser().subscribe(currentUser => {
               this.currentUser = currentUser;
               this._translate.use(this.currentUser.language);
           });
     }
-
-      
 }

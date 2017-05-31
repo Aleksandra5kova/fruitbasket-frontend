@@ -19,12 +19,14 @@ export class OrdersService {
 
    constructor(private http: Http) { }
 
-   getOrders(){
+   // list orders
+   getOrders() {
      return this.http.get(`${this.baseUrl}/orders`).map((response) => {
         return response.json();
      });
    }
 
+   // create or update orders
    saveOrder(order) {
       return this.http.post(`${this.baseUrl}/orders`, order).map((response) => {
         this.orderFormSource.next(order);
@@ -32,6 +34,7 @@ export class OrdersService {
       });
    }
 
+   // delete order
    deleteOrder(id) {
      return this.http.delete(`${this.baseUrl}/orders/${id}`).map((response) => {
        this.orderDeleteSource.next(id);

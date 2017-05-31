@@ -11,12 +11,14 @@ export class UsersService {
 
   constructor(private http: Http){}
 
+  // list users
   getUsers() {
     return this.http.get(`${this.baseUrl}/users`).map((response) => {
       return response.json();
     });
   }
 
+  // create user
    saveUser(user) {
        return this.http.post(`${this.baseUrl}/register`, user ).map((response) => {
           return response.json();
@@ -37,8 +39,16 @@ export class UsersService {
       });
     }
 
-    getCurrentUser(){
+    getCurrentUser() {
       return this.http.get(`${this.baseUrl}/currentUser`).map((response) => {
+        if(response["_body"] == "") {
+          return  {
+            email: '',
+            username: '',
+            password: '',
+            language: 'en'
+          };
+        }
           return response.json();
       });
     }
@@ -57,7 +67,21 @@ export class UsersService {
       .catch((error) => {
         throw error;
       });
-
     }
+
+    logout() {
+      return this.http.get(`${this.baseUrl}/logout`).map((response) => {
+         return {
+            email: '',
+            username: '',
+            password: '',
+            language: 'en'
+          };
+      }).catch((error) => {
+        throw error;
+      });
+    }
+
 }
+
 

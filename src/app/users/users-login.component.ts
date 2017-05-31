@@ -22,8 +22,9 @@ export class UsersSignInComponent {
 
     constructor(private router: Router,
                 private usersService: UsersService,
-                private _translate: TranslateService){}
+                private _translate: TranslateService) { }
 
+    // login
     loginUser() {
         this.usersService.loginUser(this.user.username, this.user.password).subscribe(user => {},
         error => {
@@ -31,9 +32,9 @@ export class UsersSignInComponent {
             if(error.status == 0) {
                 this.error = false;
                 this.errorDesc = '';
-                this.setCurrentUser();
+                this.setCurrentLanguage();
                 this.router.navigate(['/welcome']);
-            } else if(error.status == 500){
+            } else if(error.status == 500) {
                 this.error = true;
                 this.errorDesc = 'incorrectUsernameOrPassword';
             } else {
@@ -43,9 +44,10 @@ export class UsersSignInComponent {
         });
     }
 
-    setCurrentUser() {
+    // set user's language
+    setCurrentLanguage() {
         this.usersService.getCurrentUser().subscribe(user => {
-             this.user = user;
+             this.user.language = user.language;
              this._translate.use(this.user.language);
         });
     }

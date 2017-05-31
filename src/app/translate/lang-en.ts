@@ -54,5 +54,12 @@ export const LANG_EN_TRANS = {
     'paymentDateRequired' : 'Payment Date is required.',
     'deliveryDateRequired' : 'Delivery Date is required.',
     'usernameSize' : 'Username must be between 6-32 characters long.',
-    'passwordSize' : 'Password must be between 8-32 characters long.'
+    'passwordSize' : 'Password must be between 8-32 characters long.',
+    'hello' : 'Hello',
+    'signout' : 'Sign Out',
+    'itemCategory' : 'Item Category',
+    'itemName' : 'Item Name',
+    'quantity' : 'Quantity',
+    'price' : 'Price',
+    'id' : 'ID'
 };

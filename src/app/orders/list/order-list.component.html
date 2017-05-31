@@ -21,7 +21,7 @@
                     <td class="text text-center">{{order.issueDate | date: 'MM/dd/yyyy'}}</td>
                     <td class="text text-center">{{order.paymentDate | date: 'MM/dd/yyyy'}}</td>
                     <td class="text text-center">{{order.hasDelivey}}</td>
-                    <td class="text text-center">{{order.deliveryDate | date: 'MM/dd/yyyy'}}</td>
+                    <td class="text text-center">{{order.deliveryDate | date: 'MM/dd/yyyy hh:mm a'}}</td>
                     <td class="text-center">
                       <button type="submit" class="btn btn-warning" (click)="editButton(order)">{{ 'edit' | translate }}</button>
                     </td>

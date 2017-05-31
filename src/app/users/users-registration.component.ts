@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { UsersService } from './users.service';
+import { TranslateService } from '../translate/translate.service';
 
 @Component({
   selector: 'app-user-registration',
@@ -30,8 +31,10 @@ export class UserRegistrationComponent {
   ];
 
   constructor(private router: Router,
-              private usersService: UsersService){}
+              private usersService: UsersService,
+              private _translate: TranslateService){}
 
+  // create user
   saveUser() {
 
       this.checkUsername();
@@ -62,16 +65,23 @@ export class UserRegistrationComponent {
 
     }
 
+    // check if username exist
     checkUsername() {
        this.usersService.checkUsername(this.user.username).subscribe(usernameExist => {
          this.usernameExist = usernameExist;
        });
     }
 
+    // check if email exist
     checkEmail() {
        this.usersService.checkEmail(this.user.email).subscribe(emailExist => {
          this.emailExist = emailExist;
        });
+    }
+
+    // change current language using radio button
+    changeLanguage(lang){
+       this._translate.use(lang);
     }
 
 }

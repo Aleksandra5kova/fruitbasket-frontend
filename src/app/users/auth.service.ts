@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
 
 import 'rxjs/add/operator/map';
 
@@ -12,7 +14,6 @@ export class AuthService {
 
   isLoggedIn() {
     return this.http.get(`${this.baseUrl}/isLoggedIn`).map((response) => {
-      console.log('auth service');
       return response.json();
     });
   }

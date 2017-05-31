@@ -16,7 +16,7 @@ export class TranslateService {
         this._currentLang = lang;
     }
 
-    translate(key){
+    translate(key) {
         let translations = key;
         if(this._translations[this._currentLang] && this._translations[this._currentLang][key]){
             return this._translations[this._currentLang][key];
@@ -24,7 +24,7 @@ export class TranslateService {
         return translations;
     }
 
-    instant(key){
+    instant(key) {
         return this.translate(key);
     }
 }
