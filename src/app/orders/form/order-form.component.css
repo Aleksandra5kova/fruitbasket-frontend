@@ -4,6 +4,7 @@
 .buttons {
   padding-left:40px;
   padding-right: 0px;
+  padding-bottom: 15px;
 }
 .alert-danger h4 {
   margin-left:25px;
@@ -30,4 +31,13 @@
 }
 .table-bordered>tbody>tr>td, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>td, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>thead>tr>th {
     border: 1px solid #0275d8;
+}
+hr {
+  border: 1.5px solid #0275d8;
+}
+.add-div .circle-button {
+  border-radius:70px;
+}
+.add-div .circle-button span {
+  padding-left:1px;
 }

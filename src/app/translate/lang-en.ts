@@ -60,6 +60,7 @@ export const LANG_EN_TRANS = {
     'itemCategory' : 'Item Category',
     'itemName' : 'Item Name',
     'quantity' : 'Quantity',
-    'price' : 'Price',
+    'unit' : 'Unit',
+    'pricePerUnit' : 'Price Per Unit',
     'id' : 'ID'
 };

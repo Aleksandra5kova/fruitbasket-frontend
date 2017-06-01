@@ -20,6 +20,9 @@ import { AuthService } from './users/auth.service';
 import { OrdersService } from './orders/orders.service';
 import { CanActivateViaAuthGuard } from './users/auth-guard.service';
 import { SuppliersService } from './suppliers/suppliers.service';
+import { FoodTypesService } from './foodtypes/foodtypes.service';
+import { FoodsService } from './foods/foods.service';
+import { OrderItemsService } from './orderitems/orderitems.service';
 import { TRANSLATION_PROVIDERS } from './translate/translations';
 import { TranslateService } from './translate/translate.service';
 import { TranslatePipe } from './translate/translate.pipe';
@@ -53,6 +56,9 @@ import { routing } from './app.routes';
     AuthService,
     OrdersService,
     SuppliersService,
+    FoodTypesService,
+    FoodsService,
+    OrderItemsService,
     CanActivateViaAuthGuard,
     TRANSLATION_PROVIDERS,
     TranslateService

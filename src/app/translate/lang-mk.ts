@@ -60,6 +60,7 @@ export const LANG_MK_TRANS = {
     'itemCategory' : 'Категорија',
     'itemName' : 'Име',
     'quantity' : 'Количина',
-    'price' : 'Цена',
+    'unit' : 'Мерка',
+    'pricePerUnit' : 'Единечна цена',
     'id' : 'ИД'
 };
