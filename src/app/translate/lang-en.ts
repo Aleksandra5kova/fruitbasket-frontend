@@ -62,5 +62,7 @@ export const LANG_EN_TRANS = {
     'quantity' : 'Quantity',
     'unit' : 'Unit',
     'pricePerUnit' : 'Price Per Unit',
-    'id' : 'ID'
+    'id' : 'ID',
+    'totalPrice' : 'Total Price',
+    'save': 'Save'
 };

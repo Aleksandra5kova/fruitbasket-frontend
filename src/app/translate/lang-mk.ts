@@ -62,5 +62,7 @@ export const LANG_MK_TRANS = {
     'quantity' : 'Количина',
     'unit' : 'Мерка',
     'pricePerUnit' : 'Единечна цена',
-    'id' : 'ИД'
+    'id' : 'ИД',
+    'totalPrice' : 'Вкупна цена',
+    'save': 'Зачувај'
 };

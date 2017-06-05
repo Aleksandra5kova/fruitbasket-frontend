@@ -14,6 +14,7 @@ import { OrderItemsService } from '../../orderitems/orderitems.service';
 })
 export class OrderFormComponent implements OnInit {
 
+  showDialog = false;
   order = {
     id: '',
     orderNo: '',
@@ -47,7 +48,10 @@ export class OrderFormComponent implements OnInit {
     name: '',
     unit: '',
     price: '',
-    foodType: {}
+    foodType: {
+      id: '',
+      name: ''
+    }
   };
   orderitems = [];
   orderitem = {
@@ -58,7 +62,10 @@ export class OrderFormComponent implements OnInit {
       name: '',
       unit: '',
       price: '',
-      foodType: {}
+      foodType: {
+        id: '',
+        name: ''
+      }
     },
     order: {
       id: ''
@@ -69,6 +76,25 @@ export class OrderFormComponent implements OnInit {
   errorsCounter = 0;
   itemErrors = [];
   itemErrorsCounter = 0;
+  currentQuantity = '';
+  total = 0;
+  selectedOrderItem = {
+    id: '',
+    quantity: '',
+    food: {
+      id: '',
+      name: '',
+      unit: '',
+      price: '',
+      foodType: {
+        id: '',
+        name: ''
+      }
+    },
+    order: {
+      id: ''
+    }
+  };
 
   constructor(private ordersService: OrdersService,
               private suppliersService: SuppliersService,
@@ -87,6 +113,7 @@ export class OrderFormComponent implements OnInit {
         this.order = this.orderEdit;
         this.getOrderItemsByOrder(this.order.id);
         this.selectedSupplier = this.order.supplier;
+        this.getTotalPrice();
       });
    }
 
@@ -97,9 +124,7 @@ export class OrderFormComponent implements OnInit {
      this.foodTypesService.getFoodTypes().subscribe( foodtypes => {
        this.foodTypes = foodtypes;
      });
-     this.foodsService.getFoods().subscribe( foods => {
-       this.foods = foods;
-     });
+     this.getFoods();
   }
 
   // validate and save order
@@ -171,7 +196,10 @@ export class OrderFormComponent implements OnInit {
       name: '',
       unit: '',
       price: '',
-      foodType: {}
+      foodType: {
+        id: '',
+        name: ''
+      }
     };
     this.orderitem = {
       id: '',
@@ -181,7 +209,10 @@ export class OrderFormComponent implements OnInit {
         name: '',
         unit: '',
         price: '',
-        foodType: {}
+        foodType: {
+          id: '',
+          name: ''
+        }
       },
       order: {
         id: ''
@@ -193,24 +224,26 @@ export class OrderFormComponent implements OnInit {
     this.itemErrors = [];
     this.itemErrorsCounter = 0;
     this.ordersService.cancelChange(this.order);
+    this.currentQuantity = '';
   }
 
   // get foods of some foodtype (on change on foodtype dropdown)
   changeFoodType(){
-     this.foodsService.getFoodsByFoodType(this.selectedFoodType.id).subscribe( foods => {
-       this.foods = foods;
-     });
+     this.getFoodsByFoodType();
   }
 
   // get orderitems of some order (on edit button in the table of my orders)
   getOrderItemsByOrder(id){
     this.orderItemsService.getOrderItemsByOrder(id).subscribe(orderitems => {
+      console.log('here');
       this.orderitems = orderitems;
     });
   }
 
   // save the orderitem (the (+) button)
   saveOrderItem(){
+
+    console.log(this.selectedFood);
 
     this.itemErrors = [];
     this.itemErrorsCounter = 0;
@@ -223,8 +256,10 @@ export class OrderFormComponent implements OnInit {
     } else {
       this.orderitem.food = this.selectedFood;
     }
-    if(this.orderitem.quantity == ''){
+    if(this.currentQuantity == ''){
       this.itemErrors[this.itemErrorsCounter++] = 'quantityRequired';
+    } else {
+      this.orderitem.quantity = this.currentQuantity;
     }
 
     if(this.itemErrorsCounter == 0) {
@@ -232,10 +267,12 @@ export class OrderFormComponent implements OnInit {
       this.orderItemsService.saveOrderItem(this.orderitem).subscribe(orderItem => {
         this.getOrderItemsByOrder(this.order.id);
         this.clearOrderItem();
+        this.getTotalPrice();
       });
     }
   }
 
+  // clear the orderitem form
   clearOrderItem(){
     this.selectedFoodType = {
       id: '',
@@ -246,7 +283,10 @@ export class OrderFormComponent implements OnInit {
       name: '',
       unit: '',
       price: '',
-      foodType: {}
+      foodType: {
+        id: '',
+        name: ''
+      }
     };
     this.orderitem = {
       id: '',
@@ -256,12 +296,107 @@ export class OrderFormComponent implements OnInit {
         name: '',
         unit: '',
         price: '',
-        foodType: {}
+        foodType: {
+          id: '',
+          name: ''
+        }
       },
       order: {
         id: ''
       }
     };
+    this.currentQuantity = '';
   }
+
+  // edit orderitem
+  editOrderItem(orderitem) {
+
+    // delete all errors before editing new orderitem
+    this.errorsCounter = 0;
+    this.itemErrors = [];
+
+    this.orderitem = orderitem;
+    this.selectedFoodType = orderitem.food.foodType;
+    this.getFoodsByFoodType();
+    this.selectedFood = orderitem.food;
+    this.currentQuantity = orderitem.quantity;
+  }
+
+  // get all the foods
+  getFoods(){
+    this.foodsService.getFoods().subscribe( foods => {
+       this.foods = foods;
+    });
+  }
+
+  // get all the foods from selected foodtype
+  getFoodsByFoodType(){
+    this.foodsService.getFoodsByFoodType(this.selectedFoodType.id).subscribe( foods => {
+         this.foods = foods;
+    });
+  }
+
+  getTotalPrice(){
+    this.orderItemsService.totalPrice(this.order.id).subscribe( total => {
+         this.total = total;
+    });
+  }
+
+  // delete button in the orderitems table (opens dialog)
+  deleteButton(selectedOrderItem){
+    this.showDialog = true;
+    this.selectedOrderItem = selectedOrderItem;
+  }
+
+  // yes button in the dialog
+  deleteOrderItem(){
+    this.orderItemsService.deleteOrderItem(this.selectedOrderItem.id).subscribe(status => {
+      if(status){
+        this.getOrderItemsByOrder(this.order.id);
+        this.getTotalPrice();
+        this.cancelButton();
+      }
+    });
+  }
+
+  // no button in the dialog
+  cancelButton(){
+    this.showDialog = false;
+  }
+
+  onRowClick(event, orderitem, field) {
+
+    if(field == 'orderitem.food.name') {
+      orderitem.food.name = event.target.outerText;
+    }
+
+    if(field == 'orderitem.quantity') {
+      if(isNaN(Number(event.target.outerText))){
+        this.itemErrors[this.itemErrorsCounter++] = 'invalidFormat';
+      } else {
+        orderitem.quantity = event.target.outerText;
+      }
+    }
+
+    if(field == 'orderitem.food.unit') {
+      orderitem.food.unit = event.target.outerText;
+    }
+
+    if(field == 'orderitem.food.price') {
+      if(isNaN(Number(event.target.outerText))){
+        this.itemErrors[this.itemErrorsCounter++] = 'invalidFormat';
+      } else {
+        orderitem.food.price = event.target.outerText;
+      }
+    }
+
+    this.orderItemsService.saveOrderItem(orderitem).subscribe(orderItem => {
+        this.getOrderItemsByOrder(this.order.id);
+        this.clearOrderItem();
+        this.getTotalPrice();
+    });
+
+  }
+
 
 }

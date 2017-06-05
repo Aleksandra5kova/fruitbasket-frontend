@@ -30,7 +30,7 @@
                   </div>
                   <div class="form-group" *ngIf="deliveryFlag">
                     <label for="deliveryDateInput">{{ 'deliveryDate' | translate }}</label>
-                    <input [(ngModel)]="order.deliveryDate" name="deliveryDate" type="datetime-local" class="form-control" id="deliveryDateInput" placeholder="Delivery Date" />
+                    <input [(ngModel)]="order.deliveryDate" name="deliveryDate" type="datetime-local" class="form-control" id="deliveryDateInput" />
                   </div>
 
                   <div class="form-group">
@@ -66,7 +66,7 @@
                       </div>
                       <div class="form-group col-md-3 quantity-div">
                         <label for="quantityInput">{{ 'quantity' | translate }}</label>
-                        <input type="number" class="form-control" id="quantityInput" [(ngModel)]="orderitem.quantity" name="paymentDate"/>
+                        <input type="number" class="form-control" id="quantityInput" [(ngModel)]="currentQuantity" name="paymentDate"/>
                       </div>
                       <div class="form-group col-md-1 add-div">
                         <button class="circle-button btn btn-warning" (click)="saveOrderItem()"><span class="glyphicon glyphicon-plus"></span></button>
@@ -85,33 +85,48 @@
                        <table class="table table-striped table-bordered" *ngIf="orderitems.length!=0">
                         <thead>
                           <tr>
-                            <th>{{ 'id' | translate }}</th>
-                            <th>{{ 'itemName' | translate }}</th>
-                            <th>{{ 'quantity' | translate }}</th>
-                            <th>{{ 'unit' | translate }}</th>
-                            <th>{{ 'pricePerUnit' | translate }}</th>
+                            <th class="text text-center">{{ 'itemName' | translate }}</th>
+                            <th class="text text-center">{{ 'quantity' | translate }}</th>
+                            <th class="text text-center">{{ 'unit' | translate }}</th>
+                            <th class="text text-right">{{ 'pricePerUnit' | translate }}</th>
+                            <th class="text text-right">{{ 'totalPrice' | translate }}</th>
                             <th></th>
                             <th></th>
                           </tr>
                         </thead>
                         <tbody>
                           <tr *ngFor="let orderitem of orderitems">
-                              <td class="text text-center">{{orderitem.id}}</td>
-                              <td class="text text-center">{{orderitem.food.name}}</td>
-                              <td class="text text-center">{{orderitem.quantity}}</td>
-                              <td class="text text-center">{{orderitem.food.unit}}</td>
-                              <td class="text text-center">{{orderitem.food.price}}</td>
+                              <td class="text text-center" contenteditable='true' (input)="onRowClick($event, orderitem, 'orderitem.food.name')">{{orderitem.food.name}}</td>
+                              <td class="text text-center" contenteditable='true' (input)="onRowClick($event, orderitem, 'orderitem.quantity')">{{orderitem.quantity}}</td>
+                              <td class="text text-center" contenteditable='true' (input)="onRowClick($event, orderitem, 'orderitem.food.unit')">{{orderitem.food.unit}}</td>
+                              <td class="text text-right" contenteditable='true' (input)="onRowClick($event, orderitem, 'orderitem.food.price')">{{orderitem.food.price}}</td>
+                              <td class="text text-right">{{orderitem.food.price * orderitem.quantity}}</td>
                               <td class="text-center">
-                                <button type="submit" class="btn btn-warning">{{ 'edit' | translate }}</button>
+                                <button type="submit" class="btn btn-warning" (click)="editOrderItem(orderitem)">{{ 'edit' | translate }}</button>
                               </td>
                               <td class="text-center">
-                                <button type="submit" class="btn btn-danger">{{ 'delete' | translate }}</button>
+                                <button type="submit" class="btn btn-danger" (click)="deleteButton(orderitem)">{{ 'delete' | translate }}</button>
                               </td>
+                          </tr>
+                          <tr>
+                            <td colspan="4"></td>
+                            <td class="text-right"><h4>Total: {{total}}</h4></td>
+                            <td colspan="3"></td>
                           </tr>
                         </tbody>
                       </table>
+
                      </div>
                   </div>
               </form>
             </div>
           </div>
+
+
+        <app-delete-dialog [(visible)]="showDialog" class="text-center">
+            <h1>{{ 'areYouSure' | translate }}</h1>
+            <div class="text-center buttons">
+              <button class="btn btn-lg btn-primary" (click)="deleteOrderItem()">{{ 'yes' | translate }}</button>
+              <button class="btn btn-lg btn-danger" (click)="cancelButton()">{{ 'no' | translate }}</button>
+            </div>
+        </app-delete-dialog>
