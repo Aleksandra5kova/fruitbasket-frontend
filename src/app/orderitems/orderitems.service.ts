@@ -17,7 +17,6 @@ export class OrderItemsService {
   }
 
   saveOrderItem(orderItem) {
-     console.log(orderItem);
     return this.http.post(`${this.baseUrl}/orderItems`, orderItem).map((response) => {
       return response.json();
     });

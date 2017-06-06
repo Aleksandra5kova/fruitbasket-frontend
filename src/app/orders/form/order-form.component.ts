@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Http } from '@angular/http';
+import { DatePipe } from '@angular/common';
 
 import { OrdersService } from '../orders.service';
 import { SuppliersService } from '../../suppliers/suppliers.service';
@@ -111,6 +112,12 @@ export class OrderFormComponent implements OnInit {
           this.deliveryFlag = false;
         }
         this.order = this.orderEdit;
+
+        var datePipe = new DatePipe('en-US');
+        console.log(this.order.deliveryDate);
+        this.order.deliveryDate = datePipe.transform(this.order.deliveryDate, 'MM/dd/yyyy HH:mm a');
+        console.log(this.order.deliveryDate);
+
         this.getOrderItemsByOrder(this.order.id);
         this.selectedSupplier = this.order.supplier;
         this.getTotalPrice();
@@ -149,8 +156,13 @@ export class OrderFormComponent implements OnInit {
       this.errors[this.errorsCounter++] = 'deliveryDateRequired';
     }
 
+    var datePipe = new DatePipe('en-US');
+    this.order.issueDate = datePipe.transform(this.order.issueDate, 'yyyy-MM-dd');
+    this.order.paymentDate = datePipe.transform(this.order.paymentDate, 'yyyy-MM-dd');
+    this.order.deliveryDate = datePipe.transform(this.order.deliveryDate, 'yyyy-MM-dd hh:mm a');
+
     if(this.errorsCounter == 0) {
-      if(this.deliveryFlag == true){
+      if(this.deliveryFlag == true) {
         this.order.hasDelivey = 'YES';
       } else {
         this.order.hasDelivey = 'NO';
@@ -366,27 +378,9 @@ export class OrderFormComponent implements OnInit {
 
   onRowClick(event, orderitem, field) {
 
-    if(field == 'orderitem.food.name') {
-      orderitem.food.name = event.target.outerText;
-    }
-
     if(field == 'orderitem.quantity') {
-      if(isNaN(Number(event.target.outerText))){
-        this.itemErrors[this.itemErrorsCounter++] = 'invalidFormat';
-      } else {
+      if(!isNaN(Number(event.target.outerText))) {
         orderitem.quantity = event.target.outerText;
-      }
-    }
-
-    if(field == 'orderitem.food.unit') {
-      orderitem.food.unit = event.target.outerText;
-    }
-
-    if(field == 'orderitem.food.price') {
-      if(isNaN(Number(event.target.outerText))){
-        this.itemErrors[this.itemErrorsCounter++] = 'invalidFormat';
-      } else {
-        orderitem.food.price = event.target.outerText;
       }
     }
 
@@ -397,6 +391,5 @@ export class OrderFormComponent implements OnInit {
     });
 
   }
-
 
 }

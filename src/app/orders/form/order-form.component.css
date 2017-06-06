@@ -1,11 +1,6 @@
 .form-check{
   margin-bottom: 10px;
 }
-.buttons {
-  padding-left:40px;
-  padding-right: 0px;
-  padding-bottom: 15px;
-}
 .alert-danger h4 {
   margin-left:25px;
 }
@@ -43,6 +38,6 @@ hr {
 }
 .buttons {
   margin-top:40px;
-  padding-left:0px;
-
+  padding-left:55px;
+  padding-bottom: 15px;
 }

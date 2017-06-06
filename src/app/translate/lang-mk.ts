@@ -64,5 +64,8 @@ export const LANG_MK_TRANS = {
     'pricePerUnit' : 'Единечна цена',
     'id' : 'ИД',
     'totalPrice' : 'Вкупна цена',
-    'save': 'Зачувај'
+    'save': 'Зачувај',
+    'enterOrder' : 'Најпрво внесете артикал.',
+    'itemRequired' : 'Артикал е задолжително поле.',
+    'quantityRequired' : 'Количината е задолжително поле.'
 };

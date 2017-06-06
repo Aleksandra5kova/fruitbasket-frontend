@@ -16,12 +16,12 @@
             </thead>
             <tbody>
                <tr *ngFor="let order of orders; let i of index">
-                    <td class="text text-center">{{order.orderNo}}</td>
+                    <td class="text text-center" contenteditable='true' (input)="onRowClickOrder($event, order, 'order.orderNo')">{{order.orderNo}}</td>
                     <td class="text text-center">{{order.supplier.name}}</td>
-                    <td class="text text-center">{{order.issueDate | date: 'MM/dd/yyyy'}}</td>
-                    <td class="text text-center">{{order.paymentDate | date: 'MM/dd/yyyy'}}</td>
+                    <td class="text text-center" contenteditable='true' (input)="onRowClickOrder($event, order, 'order.issueDate')">{{order.issueDate | date: 'yyyy-MM-dd'}}</td>
+                    <td class="text text-center" contenteditable='true' (input)="onRowClickOrder($event, order, 'order.paymentDate')">{{order.paymentDate | date: 'yyyy-MM-dd'}}</td>
                     <td class="text text-center">{{order.hasDelivey}}</td>
-                    <td class="text text-center">{{order.deliveryDate | date: 'MM/dd/yyyy hh:mm a'}}</td>
+                    <td class="text text-center" contenteditable='true' (input)="onRowClickOrder($event, order, 'order.deliveryDate')">{{order.deliveryDate | date: 'yyyy-MM-dd hh:mm a'}}</td>
                     <td class="text-center">
                       <button type="submit" class="btn btn-warning" (click)="editButton(order)">{{ 'edit' | translate }}</button>
                     </td>

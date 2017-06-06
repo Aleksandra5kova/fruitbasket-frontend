@@ -68,6 +68,30 @@ export class OrderListComponent implements OnInit {
     this.ordersService.editOrder(order);
   }
 
+  onRowClickOrder(event, order, field){
+
+    //console.log(event.target.outerText);
+
+    if(field == 'order.orderNo') {
+      order.orderNo = event.target.outerText;
+    }
+    if(field == 'order.issueDate') {
+      order.issueDate = event.target.outerText;
+    }
+    if(field == 'order.paymentDate') {
+      order.paymentDate = event.target.outerText;
+    }
+    if(field == 'order.deliveryDate') {
+      order.deliveryDate = event.target.outerText;
+    }
+
+    this.ordersService.saveOrder(order).subscribe(order => {
+      console.log(order);
+        this.order = order;
+    });
+
+  }
+
 }
 
 
