@@ -28,7 +28,8 @@ export class OrderFormComponent implements OnInit {
     issueDate: '',
     paymentDate: '',
     hasDelivey: '',
-    deliveryDate: ''
+    deliveryDate: '',
+    deliveryTime: ''
   };
   orderEdit;
   suppliers = [];
@@ -106,17 +107,12 @@ export class OrderFormComponent implements OnInit {
       ordersService.orderEdit$.subscribe(orderEdit => {
         this.clearForm();
         this.orderEdit = orderEdit;
-        if(this.orderEdit.hasDelivey == 'YES') {
+        if(this.orderEdit.hasDelivey == true) {
           this.deliveryFlag = true;
         } else {
           this.deliveryFlag = false;
         }
         this.order = this.orderEdit;
-
-        var datePipe = new DatePipe('en-US');
-        console.log(this.order.deliveryDate);
-        this.order.deliveryDate = datePipe.transform(this.order.deliveryDate, 'MM/dd/yyyy HH:mm a');
-        console.log(this.order.deliveryDate);
 
         this.getOrderItemsByOrder(this.order.id);
         this.selectedSupplier = this.order.supplier;
@@ -159,14 +155,16 @@ export class OrderFormComponent implements OnInit {
     var datePipe = new DatePipe('en-US');
     this.order.issueDate = datePipe.transform(this.order.issueDate, 'yyyy-MM-dd');
     this.order.paymentDate = datePipe.transform(this.order.paymentDate, 'yyyy-MM-dd');
-    this.order.deliveryDate = datePipe.transform(this.order.deliveryDate, 'yyyy-MM-dd hh:mm a');
+    this.order.deliveryDate = datePipe.transform(this.order.deliveryDate, 'yyyy-MM-dd');
+    console.log(this.order.deliveryTime);
 
     if(this.errorsCounter == 0) {
       if(this.deliveryFlag == true) {
-        this.order.hasDelivey = 'YES';
+        this.order.hasDelivey = '1';
       } else {
-        this.order.hasDelivey = 'NO';
+        this.order.hasDelivey = '0';
         this.order.deliveryDate = null;
+        this.order.deliveryTime = null;
       }
       this.order.supplier = this.selectedSupplier;
       this.ordersService.saveOrder(this.order).subscribe((order) => {
@@ -176,7 +174,9 @@ export class OrderFormComponent implements OnInit {
 
   }
 
-  // clear the form
+  /**
+   * Clear the form.
+   */
   clearForm() {
     this.order = {
       id: '',
@@ -190,7 +190,8 @@ export class OrderFormComponent implements OnInit {
       issueDate: '',
       paymentDate: '',
       hasDelivey: '',
-      deliveryDate: ''
+      deliveryDate: '',
+      deliveryTime: ''
     };
     this.deliveryFlag = false;
     this.selectedSupplier = {
@@ -247,11 +248,13 @@ export class OrderFormComponent implements OnInit {
   // get orderitems of some order (on edit button in the table of my orders)
   getOrderItemsByOrder(id){
     this.orderItemsService.getOrderItemsByOrder(id).subscribe(orderitems => {
-      console.log('here');
       this.orderitems = orderitems;
     });
   }
 
+  isEmpty(object){
+   return object === '';
+  }
   // save the orderitem (the (+) button)
   saveOrderItem(){
 
@@ -260,7 +263,7 @@ export class OrderFormComponent implements OnInit {
     this.itemErrors = [];
     this.itemErrorsCounter = 0;
 
-    if(this.order.id == ''){
+    if(this.isEmpty(this.order.id)){
       this.itemErrors[this.itemErrorsCounter++] = 'enterOrder';
     }
     if(this.selectedFood.id == ''){

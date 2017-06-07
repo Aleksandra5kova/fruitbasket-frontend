@@ -20,7 +20,8 @@ export class OrderListComponent implements OnInit {
     issueDate: '',
     paymentDate: '',
     hasDelivey: false,
-    deliveryDate: ''
+    deliveryDate: '',
+    deliveryTime: ''
   };
 
    constructor(private ordersService: OrdersService) {
@@ -37,6 +38,7 @@ export class OrderListComponent implements OnInit {
 
    ngOnInit() {
      this.getOrders();
+     this.editCheckboxes();
    }
 
   // list all orders in the table
@@ -70,8 +72,6 @@ export class OrderListComponent implements OnInit {
 
   onRowClickOrder(event, order, field){
 
-    //console.log(event.target.outerText);
-
     if(field == 'order.orderNo') {
       order.orderNo = event.target.outerText;
     }
@@ -86,10 +86,17 @@ export class OrderListComponent implements OnInit {
     }
 
     this.ordersService.saveOrder(order).subscribe(order => {
-      console.log(order);
         this.order = order;
     });
 
+  }
+
+  editCheckboxes(){
+      var checkboxes = document.getElementsByClassName('checkbox');
+      console.log(checkboxes);
+      for (var i = 0; i < checkboxes.length; i++) {
+          console.log(checkboxes[i]);
+      }
   }
 
 }

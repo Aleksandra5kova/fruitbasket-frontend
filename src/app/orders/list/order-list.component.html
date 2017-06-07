@@ -10,6 +10,7 @@
                 <th class="text-center">{{ 'paymentDate' | translate }}</th>
                 <th class="text-center">{{ 'delivery' | translate }}</th>
                 <th class="text-center">{{ 'deliveryDate' | translate }}</th>
+                <th class="text-center">{{ 'deliveryTime' | translate }}</th>
                 <th>&nbsp;</th>
                 <th>&nbsp;</th>
               </tr>
@@ -20,8 +21,11 @@
                     <td class="text text-center">{{order.supplier.name}}</td>
                     <td class="text text-center" contenteditable='true' (input)="onRowClickOrder($event, order, 'order.issueDate')">{{order.issueDate | date: 'yyyy-MM-dd'}}</td>
                     <td class="text text-center" contenteditable='true' (input)="onRowClickOrder($event, order, 'order.paymentDate')">{{order.paymentDate | date: 'yyyy-MM-dd'}}</td>
-                    <td class="text text-center">{{order.hasDelivey}}</td>
-                    <td class="text text-center" contenteditable='true' (input)="onRowClickOrder($event, order, 'order.deliveryDate')">{{order.deliveryDate | date: 'yyyy-MM-dd hh:mm a'}}</td>
+                    <td class="text text-center">
+                      <input class="text text-center" type="checkbox" [(ngModel)]="order.hasDelivey" />
+                    </td>
+                    <td class="text text-center" contenteditable='true' (input)="onRowClickOrder($event, order, 'order.deliveryDate')">{{order.deliveryDate | date: 'yyyy-MM-dd'}}</td>
+                    <td class="text text-center" contenteditable='true' (input)="onRowClickOrder($event, order, 'order.deliveryTime')">{{order.deliveryTime}}</td>
                     <td class="text-center">
                       <button type="submit" class="btn btn-warning" (click)="editButton(order)">{{ 'edit' | translate }}</button>
                     </td>

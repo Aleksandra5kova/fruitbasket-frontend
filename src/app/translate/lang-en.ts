@@ -67,5 +67,6 @@ export const LANG_EN_TRANS = {
     'save': 'Save',
     'enterOrder' : 'Insert order first.',
     'itemRequired' : 'Item is required.',
-    'quantityRequired' : 'Quantity is required.'
+    'quantityRequired' : 'Quantity is required.',
+    'deliveryTime' : 'Delivery Time'
 };
