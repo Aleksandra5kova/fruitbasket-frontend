@@ -9,7 +9,7 @@ export class FoodsService {
     constructor(private http: Http) { }
 
     getFoodsByFoodType(id){
-      let params: URLSearchParams = new URLSearchParams();
+      const params: URLSearchParams = new URLSearchParams();
       params.set('id', id);
       return this.http.get(`${this.baseUrl}/foods/foodtype`, { search: params }).map((response) => {
          return response.json();

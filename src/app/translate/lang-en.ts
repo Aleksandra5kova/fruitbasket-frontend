@@ -1,6 +1,7 @@
 export const LANG_EN_NAME = 'en';
 
 export const LANG_EN_TRANS = {
+    'welcomeToApp' : 'Welcome To Healthy Food App',
     'welcome' : 'Welcome',
     'orders' : 'Orders',
     'newOrder' : 'New order',
@@ -68,5 +69,6 @@ export const LANG_EN_TRANS = {
     'enterOrder' : 'Insert order first.',
     'itemRequired' : 'Item is required.',
     'quantityRequired' : 'Quantity is required.',
-    'deliveryTime' : 'Delivery Time'
+    'deliveryTime' : 'Delivery Time',
+    'unitRequired' : 'Unit is required.'
 };

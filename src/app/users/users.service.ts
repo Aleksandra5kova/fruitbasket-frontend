@@ -41,7 +41,7 @@ export class UsersService {
 
     getCurrentUser() {
       return this.http.get(`${this.baseUrl}/currentUser`).map((response) => {
-        if(response["_body"] == "") {
+        if(response["_body"] === "") {
           return  {
             email: '',
             username: '',

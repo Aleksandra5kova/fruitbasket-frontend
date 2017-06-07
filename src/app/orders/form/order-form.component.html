@@ -5,7 +5,7 @@
                 <div class="row">
                   <div class="form-group col-md-8">
                     <label for="orderNoInput">{{ 'orderNo' | translate }}</label>
-                    <input [(ngModel)]="order.orderNo" name="orderNo" type="text" class="form-control" id="orderNoInput"/>
+                    <input [(ngModel)]="order.orderNo" name="orderNo" type="text" class="form-control" id="orderNoInput" maxlength="15"/>
                   </div>
                    <div class="form-group col-md-4">
                     <label for="supplierInput">{{ 'supplier' | translate }}</label>
@@ -15,7 +15,7 @@
                   </div>
                     <div class="form-group col-md-6">
                       <label for="issueDateInput">{{ 'issueDate' | translate }}</label>
-                      <input [(ngModel)]="order.issueDate" name="issueDate" type="date" class="form-control" id="issueDateInput" />
+                      <input [(ngModel)]="order.issueDate" name="issueDate" type="date" class="form-control" id="issueDateInput" maxlength="10"/>
                     </div>
                   <div class="form-group col-md-6">
                       <label for="paymentDateInput">{{ 'paymentDate' | translate }}</label>
@@ -48,22 +48,24 @@
                   </div>
 
                   <div class="form-group">
-                     <div class="buttons col-md-offset-8 col-md-4"><br/>
-                        <button type="submit" class="btn btn-primary" (click)="saveOrder()">{{ 'submit' | translate }}</button>&nbsp;
-                        <button type="submit" class="btn btn-warning" (click)="clearForm()">{{ 'cancel' | translate }}</button>
+                    <div class="row">
+                      <div class="buttons col-md-offset-8 col-md-4"><br/>
+                          <button type="submit" class="btn btn-primary" (click)="saveOrder()">{{ 'submit' | translate }}</button>&nbsp;
+                          <button type="submit" class="btn btn-warning" (click)="clearForm()">{{ 'cancel' | translate }}</button>
+                      </div>
                      </div>
                   </div>
 
                   <hr/>
 
                   <div class="row">
-                      <div class="form-group col-md-4">
+                      <div class="form-group col-md-3">
                         <label for="foodTypeInput">{{ 'itemCategory' | translate }}</label>
                         <select class="form-control" [(ngModel)]="selectedFoodType.id" [ngModelOptions]="{standalone: true}" (change)="changeFoodType()">
                           <option *ngFor="let foodType of foodTypes" value={{foodType.id}} >{{foodType.name}}</option>
                         </select>
                       </div>
-                      <div class="form-group col-md-4 food-div">
+                      <div class="form-group col-md-3 food-div">
                           <label for="foodInput">{{ 'itemName' | translate }}</label>
                           <select class="form-control" [(ngModel)]="selectedFood.id" [ngModelOptions]="{standalone: true}">
                             <option *ngFor="let food of foods" value={{food.id}} >{{food.name}}</option>
@@ -72,6 +74,12 @@
                       <div class="form-group col-md-3 quantity-div">
                         <label for="quantityInput">{{ 'quantity' | translate }}</label>
                         <input type="number" class="form-control" id="quantityInput" [(ngModel)]="currentQuantity" name="currentQuantity"/>
+                      </div>
+                      <div class="form-group col-md-2">
+                          <label for="unitInput">{{ 'unit' | translate }}</label>
+                          <select class="form-control" [(ngModel)]="selectedUnit.id" [ngModelOptions]="{standalone: true}">
+                            <option *ngFor="let unit of units" value={{unit.id}} >{{unit.name}}</option>
+                          </select>
                       </div>
                       <div class="form-group col-md-1 add-div">
                         <button class="circle-button btn btn-warning" (click)="saveOrderItem()"><span class="glyphicon glyphicon-plus"></span></button>
@@ -103,9 +111,9 @@
                           <tr *ngFor="let orderitem of orderitems">
                               <td class="text text-center">{{orderitem.food.name}}</td>
                               <td class="text text-center" contenteditable='true' (input)="onRowClick($event, orderitem, 'orderitem.quantity')">{{orderitem.quantity}}</td>
-                              <td class="text text-center">{{orderitem.food.unit}}</td>
-                              <td class="text text-right">{{orderitem.food.price}}</td>
-                              <td class="text text-right">{{orderitem.food.price * orderitem.quantity}}</td>
+                              <td class="text text-center">1 {{orderitem.unit}}</td>
+                              <td class="text text-right">{{orderitem.price}}</td>
+                              <td class="text text-right">{{orderitem.price * orderitem.quantity}}</td>
                               <td class="text-center">
                                 <button type="submit" class="btn btn-warning" (click)="editOrderItem(orderitem)">{{ 'edit' | translate }}</button>
                               </td>

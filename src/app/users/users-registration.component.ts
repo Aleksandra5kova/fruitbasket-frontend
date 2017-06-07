@@ -40,7 +40,7 @@ export class UserRegistrationComponent {
       this.checkUsername();
       this.checkEmail();
 
-      if( this.user.password == this.passwordConfirmation){
+      if( this.user.password === this.passwordConfirmation){
         this.passwordMismatch = false;
         this.usersService.saveUser(this.user).subscribe(errors => {
           this.errors = errors;

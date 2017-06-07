@@ -22,7 +22,7 @@
                     <td class="text text-center" contenteditable='true' (input)="onRowClickOrder($event, order, 'order.issueDate')">{{order.issueDate | date: 'yyyy-MM-dd'}}</td>
                     <td class="text text-center" contenteditable='true' (input)="onRowClickOrder($event, order, 'order.paymentDate')">{{order.paymentDate | date: 'yyyy-MM-dd'}}</td>
                     <td class="text text-center">
-                      <input class="text text-center" type="checkbox" [(ngModel)]="order.hasDelivey" />
+                      <input class="text text-center" type="checkbox" [(ngModel)]="order.hasDelivey" disabled/>
                     </td>
                     <td class="text text-center" contenteditable='true' (input)="onRowClickOrder($event, order, 'order.deliveryDate')">{{order.deliveryDate | date: 'yyyy-MM-dd'}}</td>
                     <td class="text text-center" contenteditable='true' (input)="onRowClickOrder($event, order, 'order.deliveryTime')">{{order.deliveryTime}}</td>

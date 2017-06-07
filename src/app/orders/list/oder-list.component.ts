@@ -38,7 +38,6 @@ export class OrderListComponent implements OnInit {
 
    ngOnInit() {
      this.getOrders();
-     this.editCheckboxes();
    }
 
   // list all orders in the table
@@ -70,33 +69,29 @@ export class OrderListComponent implements OnInit {
     this.ordersService.editOrder(order);
   }
 
-  onRowClickOrder(event, order, field){
+  onRowClickOrder(event, order, field) {
 
-    if(field == 'order.orderNo') {
+    if (this.isEqual(field, 'order.orderNo')) {
       order.orderNo = event.target.outerText;
     }
-    if(field == 'order.issueDate') {
+    if (this.isEqual(field, 'order.issueDate')) {
       order.issueDate = event.target.outerText;
     }
-    if(field == 'order.paymentDate') {
+    if (this.isEqual(field, 'order.paymentDate')) {
       order.paymentDate = event.target.outerText;
     }
-    if(field == 'order.deliveryDate') {
+    if (this.isEqual(field, 'order.deliveryDate')) {
       order.deliveryDate = event.target.outerText;
     }
 
-    this.ordersService.saveOrder(order).subscribe(order => {
+    this.ordersService.saveOrder(order).subscribe( order => {
         this.order = order;
     });
 
   }
 
-  editCheckboxes(){
-      var checkboxes = document.getElementsByClassName('checkbox');
-      console.log(checkboxes);
-      for (var i = 0; i < checkboxes.length; i++) {
-          console.log(checkboxes[i]);
-      }
+  isEqual(field, value) {
+    return field === value;
   }
 
 }

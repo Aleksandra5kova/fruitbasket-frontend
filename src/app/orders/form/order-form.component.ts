@@ -27,7 +27,7 @@ export class OrderFormComponent implements OnInit {
     },
     issueDate: '',
     paymentDate: '',
-    hasDelivey: '',
+    hasDelivey: 0,
     deliveryDate: '',
     deliveryTime: ''
   };
@@ -48,7 +48,6 @@ export class OrderFormComponent implements OnInit {
   selectedFood = {
     id: '',
     name: '',
-    unit: '',
     price: '',
     foodType: {
       id: '',
@@ -59,10 +58,11 @@ export class OrderFormComponent implements OnInit {
   orderitem = {
     id: '',
     quantity: '',
+    unit: '',
+    price: '',
     food: {
       id: '',
       name: '',
-      unit: '',
       price: '',
       foodType: {
         id: '',
@@ -83,10 +83,11 @@ export class OrderFormComponent implements OnInit {
   selectedOrderItem = {
     id: '',
     quantity: '',
+    unit: '',
+    price: '',
     food: {
       id: '',
       name: '',
-      unit: '',
       price: '',
       foodType: {
         id: '',
@@ -97,6 +98,9 @@ export class OrderFormComponent implements OnInit {
       id: ''
     }
   };
+  selectedUnit = { id: '', name: '' };
+  units = [ { id: '1', name: 'g' },
+            { id: '2', name: 'kg' }];
 
   constructor(private ordersService: OrdersService,
               private suppliersService: SuppliersService,
@@ -107,13 +111,12 @@ export class OrderFormComponent implements OnInit {
       ordersService.orderEdit$.subscribe(orderEdit => {
         this.clearForm();
         this.orderEdit = orderEdit;
-        if(this.orderEdit.hasDelivey == true) {
+        if (this.orderEdit.hasDelivey === 1) {
           this.deliveryFlag = true;
         } else {
           this.deliveryFlag = false;
         }
         this.order = this.orderEdit;
-
         this.getOrderItemsByOrder(this.order.id);
         this.selectedSupplier = this.order.supplier;
         this.getTotalPrice();
@@ -136,33 +139,32 @@ export class OrderFormComponent implements OnInit {
     this.errors = [];
     this.errorsCounter = 0;
 
-    if(this.order.orderNo == ''){
+    if (this.isEmpty(this.order.orderNo)) {
       this.errors[this.errorsCounter++] = 'orderNoRequired';
     }
-    if(this.selectedSupplier.id == ''){
+    if (this.isEmpty(this.selectedSupplier.id)) {
       this.errors[this.errorsCounter++] = 'supplierRequired';
     }
-    if(this.order.issueDate == ''){
+    if (this.isEmpty(this.order.issueDate)) {
       this.errors[this.errorsCounter++] = 'issueDateRequired';
     }
-    if(this.order.paymentDate == ''){
+    if (this.isEmpty(this.order.paymentDate)) {
       this.errors[this.errorsCounter++] = 'paymentDateRequired';
     }
-    if(this.deliveryFlag == true && ( this.order.deliveryDate == null || this.order.deliveryDate == '')) {
+    if (this.deliveryFlag === true && ( this.order.deliveryDate === null || this.isEmpty(this.order.deliveryDate))) {
       this.errors[this.errorsCounter++] = 'deliveryDateRequired';
     }
 
-    var datePipe = new DatePipe('en-US');
+    const datePipe = new DatePipe('en-US');
     this.order.issueDate = datePipe.transform(this.order.issueDate, 'yyyy-MM-dd');
     this.order.paymentDate = datePipe.transform(this.order.paymentDate, 'yyyy-MM-dd');
     this.order.deliveryDate = datePipe.transform(this.order.deliveryDate, 'yyyy-MM-dd');
-    console.log(this.order.deliveryTime);
 
-    if(this.errorsCounter == 0) {
-      if(this.deliveryFlag == true) {
-        this.order.hasDelivey = '1';
+    if (this.errorsCounter === 0) {
+      if (this.deliveryFlag === true) {
+        this.order.hasDelivey = 1;
       } else {
-        this.order.hasDelivey = '0';
+        this.order.hasDelivey = 0;
         this.order.deliveryDate = null;
         this.order.deliveryTime = null;
       }
@@ -189,7 +191,7 @@ export class OrderFormComponent implements OnInit {
       },
       issueDate: '',
       paymentDate: '',
-      hasDelivey: '',
+      hasDelivey: 0,
       deliveryDate: '',
       deliveryTime: ''
     };
@@ -207,7 +209,6 @@ export class OrderFormComponent implements OnInit {
     this.selectedFood = {
       id: '',
       name: '',
-      unit: '',
       price: '',
       foodType: {
         id: '',
@@ -217,10 +218,11 @@ export class OrderFormComponent implements OnInit {
     this.orderitem = {
       id: '',
       quantity: '',
+      unit: '',
+      price: '',
       food: {
         id: '',
         name: '',
-        unit: '',
         price: '',
         foodType: {
           id: '',
@@ -238,47 +240,62 @@ export class OrderFormComponent implements OnInit {
     this.itemErrorsCounter = 0;
     this.ordersService.cancelChange(this.order);
     this.currentQuantity = '';
+    this.selectedUnit = { id: '', name: '' };
   }
 
   // get foods of some foodtype (on change on foodtype dropdown)
-  changeFoodType(){
+  changeFoodType() {
      this.getFoodsByFoodType();
   }
 
   // get orderitems of some order (on edit button in the table of my orders)
-  getOrderItemsByOrder(id){
+  getOrderItemsByOrder(id) {
     this.orderItemsService.getOrderItemsByOrder(id).subscribe(orderitems => {
       this.orderitems = orderitems;
     });
   }
 
-  isEmpty(object){
-   return object === '';
-  }
   // save the orderitem (the (+) button)
-  saveOrderItem(){
-
-    console.log(this.selectedFood);
+  saveOrderItem() {
 
     this.itemErrors = [];
     this.itemErrorsCounter = 0;
 
-    if(this.isEmpty(this.order.id)){
+    if (this.isEmpty(this.order.id)) {
       this.itemErrors[this.itemErrorsCounter++] = 'enterOrder';
     }
-    if(this.selectedFood.id == ''){
+    if (this.isEmpty(this.selectedFood.id)) {
       this.itemErrors[this.itemErrorsCounter++] = 'itemRequired';
     } else {
       this.orderitem.food = this.selectedFood;
     }
-    if(this.currentQuantity == ''){
+    if (this.isEmpty(this.currentQuantity)) {
       this.itemErrors[this.itemErrorsCounter++] = 'quantityRequired';
     } else {
       this.orderitem.quantity = this.currentQuantity;
     }
+    if (this.isEmpty(this.selectedUnit.id)) {
+      this.itemErrors[this.itemErrorsCounter++] = 'unitRequired';
+    } else {
+      // set orderitem's unit
+      for ( let i = 0; i < this.units.length; i++ ) {
+        if (this.units[i].id == this.selectedUnit.id) {
+          this.orderitem.unit = this.units[i].name;
+        }
+      }
+    }
 
-    if(this.itemErrorsCounter == 0) {
+    if (this.itemErrorsCounter === 0) {
       this.orderitem.order.id = this.order.id;
+
+      // add additional quantity to existing orderitem
+      for ( let i = 0; i < this.orderitems.length; i++) {
+        if( this.orderitem.food.id == this.orderitems[i].food.id && this.isEmpty(this.orderitem.id)) {
+          this.orderitems[i].quantity += this.orderitem.quantity;
+          this.orderitem = this.orderitems[i];
+        }
+      }
+
       this.orderItemsService.saveOrderItem(this.orderitem).subscribe(orderItem => {
         this.getOrderItemsByOrder(this.order.id);
         this.clearOrderItem();
@@ -288,7 +305,7 @@ export class OrderFormComponent implements OnInit {
   }
 
   // clear the orderitem form
-  clearOrderItem(){
+  clearOrderItem() {
     this.selectedFoodType = {
       id: '',
       name: ''
@@ -296,7 +313,6 @@ export class OrderFormComponent implements OnInit {
     this.selectedFood = {
       id: '',
       name: '',
-      unit: '',
       price: '',
       foodType: {
         id: '',
@@ -306,10 +322,11 @@ export class OrderFormComponent implements OnInit {
     this.orderitem = {
       id: '',
       quantity: '',
+      unit: '',
+      price: '',
       food: {
         id: '',
         name: '',
-        unit: '',
         price: '',
         foodType: {
           id: '',
@@ -321,6 +338,7 @@ export class OrderFormComponent implements OnInit {
       }
     };
     this.currentQuantity = '';
+    this.selectedUnit = { id: '', name: '' };
   }
 
   // edit orderitem
@@ -335,36 +353,44 @@ export class OrderFormComponent implements OnInit {
     this.getFoodsByFoodType();
     this.selectedFood = orderitem.food;
     this.currentQuantity = orderitem.quantity;
+
+    // selecting orderitem's unit and populating the unit dropdown
+    for ( let i = 0; i < this.units.length; i++ ) {
+      if (this.units[i].name == this.orderitem.unit) {
+        this.selectedUnit.id = this.units[i].id;
+        this.selectedUnit.name = this.units[i].name;
+      }
+    }
   }
 
   // get all the foods
-  getFoods(){
+  getFoods() {
     this.foodsService.getFoods().subscribe( foods => {
        this.foods = foods;
     });
   }
 
   // get all the foods from selected foodtype
-  getFoodsByFoodType(){
+  getFoodsByFoodType() {
     this.foodsService.getFoodsByFoodType(this.selectedFoodType.id).subscribe( foods => {
          this.foods = foods;
     });
   }
 
-  getTotalPrice(){
+  getTotalPrice() {
     this.orderItemsService.totalPrice(this.order.id).subscribe( total => {
          this.total = total;
     });
   }
 
   // delete button in the orderitems table (opens dialog)
-  deleteButton(selectedOrderItem){
+  deleteButton(selectedOrderItem) {
     this.showDialog = true;
     this.selectedOrderItem = selectedOrderItem;
   }
 
   // yes button in the dialog
-  deleteOrderItem(){
+  deleteOrderItem() {
     this.orderItemsService.deleteOrderItem(this.selectedOrderItem.id).subscribe(status => {
       if(status){
         this.getOrderItemsByOrder(this.order.id);
@@ -380,9 +406,8 @@ export class OrderFormComponent implements OnInit {
   }
 
   onRowClick(event, orderitem, field) {
-
-    if(field == 'orderitem.quantity') {
-      if(!isNaN(Number(event.target.outerText))) {
+    if (this.isEqual(field, 'orderitem.quantity')) {
+      if (!isNaN(Number(event.target.outerText))) {
         orderitem.quantity = event.target.outerText;
       }
     }
@@ -392,7 +417,14 @@ export class OrderFormComponent implements OnInit {
         this.clearOrderItem();
         this.getTotalPrice();
     });
+  }
 
+  isEmpty(object) {
+    return object === '';
+  }
+
+  isEqual(field, value) {
+    return field === value;
   }
 
 }

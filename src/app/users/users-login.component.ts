@@ -29,12 +29,12 @@ export class UsersSignInComponent {
         this.usersService.loginUser(this.user.username, this.user.password).subscribe(user => {},
         error => {
             console.log(error);
-            if(error.status == 0) {
+            if(error.status === 0) {
                 this.error = false;
                 this.errorDesc = '';
                 this.setCurrentLanguage();
                 this.router.navigate(['/welcome']);
-            } else if(error.status == 500) {
+            } else if(error.status === 500) {
                 this.error = true;
                 this.errorDesc = 'incorrectUsernameOrPassword';
             } else {

@@ -9,7 +9,7 @@ export class OrderItemsService {
   constructor(private http: Http) { }
 
   getOrderItemsByOrder(id){
-    let params: URLSearchParams = new URLSearchParams();
+    const params: URLSearchParams = new URLSearchParams();
     params.set('id', id);
     return this.http.get(`${this.baseUrl}/orderItems/order`, { search: params }).map((response) => {
       return response.json();
@@ -23,7 +23,7 @@ export class OrderItemsService {
   }
 
   totalPrice(id){
-    let params: URLSearchParams = new URLSearchParams();
+    const params: URLSearchParams = new URLSearchParams();
     params.set('id', id);
     return this.http.get(`${this.baseUrl}/orderItems/totalPrice`, { search: params }).map((response) => {
       return response.json();
@@ -32,10 +32,9 @@ export class OrderItemsService {
 
    deleteOrderItem(id) {
      return this.http.delete(`${this.baseUrl}/orderItems/${id}`).map((response) => {
-       if(response.status == 200){
+       if (response.status === 200) {
          return true;
        }
      });
    }
-
 }

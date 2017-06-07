@@ -23,10 +23,10 @@ export class MenuComponent implements OnInit {
 
   constructor(private usersService: UsersService,
               private router: Router,
-              private _translate: TranslateService){}
+              private _translate: TranslateService) { }
 
   ngOnInit() {
-    if(this.user.username == ''){
+    if (this.isEmpty(this.user.username)) {
       this.setCurrentUser();
     }
   }
@@ -44,7 +44,7 @@ export class MenuComponent implements OnInit {
         this.error = error;
       });
 
-      if(this.error == null ) {
+      if (this.error === null ) {
         this._translate.use('en');
         this.router.navigate(['/users-sign-in']);
       }
@@ -57,6 +57,10 @@ export class MenuComponent implements OnInit {
          firstname: '',
          lastname: ''
        };
+  }
+
+  isEmpty(object) {
+    return object === '';
   }
 
 }

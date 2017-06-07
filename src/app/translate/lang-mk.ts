@@ -1,6 +1,7 @@
 export const LANG_MK_NAME = 'mk';
 
 export const LANG_MK_TRANS = {
+    'welcomeToApp' : 'Добредојдовте',
     'welcome' : 'Добредојдовте',
     'orders' : 'Нарачки',
     'newOrder' : 'Нова нарачка',
@@ -68,5 +69,6 @@ export const LANG_MK_TRANS = {
     'enterOrder' : 'Најпрво внесете артикал.',
     'itemRequired' : 'Артикал е задолжително поле.',
     'quantityRequired' : 'Количината е задолжително поле.',
-    'deliveryTime' : 'Време на достава'
+    'deliveryTime' : 'Време на достава',
+    'unitRequired' : 'Мерката е задолжително поле.'
 };
