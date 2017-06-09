@@ -5,7 +5,7 @@
             <thead>
               <tr>
                 <th class="text-center">{{ 'orderNo' | translate }}</th>
-                <th class="text-center">{{ 'supplier' | translate }}</th>
+                <th class="text-center col-md-2">{{ 'supplier' | translate }}</th>
                 <th class="text-center">{{ 'issueDate' | translate }}</th>
                 <th class="text-center">{{ 'paymentDate' | translate }}</th>
                 <th class="text-center">{{ 'delivery' | translate }}</th>
@@ -18,34 +18,75 @@
             <tbody>
                <tr *ngFor="let order of orders; let i of index">
                     <td class="text text-center">
-                      <input [(ngModel)]="order.orderNo" name="orderNo" type="text" class="form-control text-center" id="orderNoInput" maxlength="15" (change)="saveOrder(order)"/>
-                    </td>
-                    <td class="text text-center">{{order.supplier.name}}</td>
-                    <td class="text text-center">
-                      <input [(ngModel)]="order.issueDate" name="issueDate" type="date" class="form-control text-center" id="issueDateInput" (change)="saveOrder(order)"/>
+                      <span class="text-span" (click)="focusIn(1,i)" onClick="this.style.display='none';">{{ order.orderNo }}</span>
+                      <input (focusout)="focusOut()" *ngIf="editableCoulumn == 1 && editableRow == i" [(ngModel)]="order.orderNo" name="orderNo" type="text" class="form-control text-center" id="orderNoInput" maxlength="15" (change)="saveOrder(order)" focus="true"/>
                     </td>
                     <td class="text text-center">
-                      <input [(ngModel)]="order.paymentDate" name="paymentDate" type="date" class="form-control" id="paymentDateInput" (change)="saveOrder(order)"/>
+                      <span class="text-span" (click)="focusIn(2,i)"  onClick="this.style.display='none';">{{ order.supplier.name }}</span>
+                      <select  (focusout)="focusOut()" *ngIf="editableCoulumn == 2 && editableRow == i" class="form-control" [(ngModel)]="order.supplier.id" [ngModelOptions]="{standalone: true}" (change)="saveOrder(order)" focus="true">
+                         <option *ngFor="let supplier of suppliers" value={{supplier.id}} >{{supplier.name}}</option>
+                      </select>
+                    </td>
+                    <td class="text text-center">
+                      <span class="text-span" (click)="focusIn(3,i)"  onClick="this.style.display='none';">{{ order.issueDate }}</span>
+                      <input (focusout)="focusOut()" *ngIf="editableCoulumn == 3 && editableRow == i" [(ngModel)]="order.issueDate" name="issueDate" type="date" class="form-control text-center" id="issueDateInput" (change)="saveOrder(order)" focus="true"/>
+                    </td>
+                    <td class="text text-center">
+                      <span class="text-span" (click)="focusIn(4,i)"  onClick="this.style.display='none';">{{ order.paymentDate }}</span>
+                      <input (focusout)="focusOut()" *ngIf="editableCoulumn == 4 && editableRow == i" [(ngModel)]="order.paymentDate" name="paymentDate" type="date" class="form-control" id="paymentDateInput" (change)="saveOrder(order)" focus="true"/>
                     </td>
                     <td class="text text-center">
                       <input class="text text-center" type="checkbox" [(ngModel)]="order.hasDelivey" disabled/>
                     </td>
-                    <td class="text text-center" contenteditable='true' (input)="onRowClickOrder($event, order, 'order.deliveryDate')">{{order.deliveryDate | date: 'yyyy-MM-dd'}}</td>
+                    <td class="text text-center">
+                      <span class="text-span" (click)="focusIn(6,i)"  onClick="this.style.display='none';">{{ order.deliveryDate }}</span>
+                      <input (focusout)="focusOut()" *ngIf="editableCoulumn == 6 && editableRow == i && order.hasDelivey" [(ngModel)]="order.deliveryDate" name="deliveryDate" type="date" class="form-control" id="deliveryDateInput" (change)="saveOrder(order)" focus="true"/>
+                    </td>
                     <td class="text text-center" contenteditable='true' (input)="onRowClickOrder($event, order, 'order.deliveryTime')">{{order.deliveryTime}}</td>
                     <td class="text-center">
-                      <button type="submit" class="btn btn-warning" (click)="editButton(order)">{{ 'edit' | translate }}</button>
+                      <button type="submit" class="btn btn-warning" (click)="editButton(order)">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                      </button>
                     </td>
                     <td class="text-center">
-                      <button type="submit" class="btn btn-danger" (click)="deleteButton(order)">{{ 'delete' | translate }}</button>
+                      <button type="submit" class="btn btn-danger" (click)="deleteButton(order)">
+                        <span class="glyphicon glyphicon-remove"></span>
+                      </button>
                     </td>
                 </tr>
             </tbody>
         </table>
 
-        <app-delete-dialog [(visible)]="showDialog" class="text-center">
+        <app-delete-dialog [(visible)]="showDialog" class="text-center delete-dialog" >
             <h1>{{ 'areYouSure' | translate }}</h1>
             <div class="text-center buttons">
               <button class="btn btn-lg btn-primary" (click)="deleteOrder()">{{ 'yes' | translate }}</button>
               <button class="btn btn-lg btn-danger" (click)="cancelButton()">{{ 'no' | translate }}</button>
             </div>
         </app-delete-dialog>
+
+        <app-errors-dialog [(visible)]="showDialog1">
+
+          <div *ngIf="errorsCounter != 0" class="changesNotSaved">
+            <h1 class="text-danger text-center">{{ 'changesNotSaved' | translate }}</h1>
+            <div class="text-danger text-left">
+              <h3>{{ 'errors' | translate }}</h3>
+              <ul>
+                <li *ngFor="let error of errors1">
+                  <strong>{{ error | translate }}</strong>
+                </li>
+              </ul>
+            </div>
+            <div class="text-center buttons">
+              <button class="btn btn-lg btn-primary" (click)="refreshList()">{{ 'ok' | translate }}</button>
+            </div>
+          </div>
+
+          <div *ngIf="errorsCounter == 0" class="changesSaved">
+            <h1 class="text-center">{{ 'changesSaved' | translate }}</h1>
+            <div class="text-center buttons">
+              <button class="btn btn-lg btn-primary" (click)="refreshList()">{{ 'ok' | translate }}</button>
+            </div>
+          </div>
+
+        </app-errors-dialog>

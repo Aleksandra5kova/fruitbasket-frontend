@@ -40,5 +40,7 @@ hr {
   margin-top:0px;
   padding-bottom: 15px;
 }
-
+.text-span {
+  cursor: cell;
+}
 

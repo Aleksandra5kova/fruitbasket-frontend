@@ -74,5 +74,9 @@ export const LANG_MK_TRANS = {
     'issueDateInvalid' : 'Датумот на издавање не е валиден.',
     'paymentDateInvalid' : 'Датумот на плаќање не е валиден.',
     'deliveryDateInvalid' : 'Датумот на испорака не е валиден.',
-    'deliveryNotAllowed' : 'Не е дозволена достава пред денот на издавање на нарачката.'
+    'deliveryNotAllowed' : 'Не е дозволена достава пред денот на издавање на нарачката.',
+    'changesNotSaved' : 'Промените не се зачувани!',
+    'changesSaved' : 'Промените се зачувани',
+    'ok' : 'Во ред.',
+    'quantityRequired' : 'Количината е задолжително поле.'
 };

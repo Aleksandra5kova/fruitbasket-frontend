@@ -74,6 +74,10 @@ export const LANG_EN_TRANS = {
     'issueDateInvalid' : 'Issue Date is not valid.',
     'paymentDateInvalid' : 'Payment Date is not valid.',
     'deliveryDateInvalid' : 'Delivery Date is not valid.',
-    'deliveryNotAllowed' : 'Delivery is not not allowed before issue date.'
+    'deliveryNotAllowed' : 'Delivery is not not allowed before issue date.',
+    'changesNotSaved' : 'Changes are not saved!',
+    'changesSaved' : 'Changes are saved.',
+    'ok' : 'OK',
+    'quantityRequired' : 'Quantity is required.'
 
 };

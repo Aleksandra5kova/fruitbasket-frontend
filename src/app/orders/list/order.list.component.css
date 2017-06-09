@@ -18,7 +18,22 @@
   padding-bottom: 18px;
 }
 .buttons {
-  margin-top:40px;
+  margin-top:20px;
+  margin-bottom: 20px;
 }
-
-
+.changesNotSaved .text-left {
+  padding-left:120px;
+  width: 400px;
+}
+.changesNotSaved .text-left h3 {
+  padding-left: 23px;
+}
+.changesSaved {
+  margin-top:30px;
+}
+.delete-dialog h1 {
+  padding-top: 10px;
+}
+.text-span {
+  cursor: cell;
+}

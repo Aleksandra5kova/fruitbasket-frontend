@@ -39,7 +39,7 @@
                     </div>
                   </div>
                   <div class="form-group">
-                    <div class="col-sm-12 alert alert-danger" *ngIf="errorsCounter != 0">
+                    <div class="col-sm-12 alert alert-danger" *ngIf="errorsCounter != 0 && showErrorsAlert">
                       <h4>{{ 'errors' | translate }}</h4>
                       <ul>
                         <li *ngFor="let error of errors"> {{ error | translate }} </li>
@@ -108,17 +108,24 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr *ngFor="let orderitem of orderitems">
+                          <tr *ngFor="let orderitem of orderitems; let i of index">
                               <td class="text text-center">{{orderitem.food.name}}</td>
-                              <td class="text text-center" contenteditable='true' (input)="onRowClick($event, orderitem, 'orderitem.quantity')">{{orderitem.quantity}}</td>
+                              <td class="text text-center">
+                                <span class="text-span" (click)="focusIn(1,i)" onClick="this.style.display='none';">{{ orderitem.quantity }}</span>
+                                <input (focusout)="focusOut()" *ngIf="editableCoulumn == 1 && editableRow == i" [(ngModel)]="orderitem.quantity" name="quantity" type="text" class="form-control text-center" id="quantityInput" (change)="saveCurrentOrderItem(orderitem)" focus="true"/>
+                              </td>
                               <td class="text text-center">1 kg</td>
                               <td class="text text-right">{{orderitem.food.price}}</td>
                               <td class="text text-right">{{orderitem.food.price * orderitem.quantity}}</td>
                               <td class="text-center">
-                                <button type="submit" class="btn btn-warning" (click)="editOrderItem(orderitem)">{{ 'edit' | translate }}</button>
+                                <button type="submit" class="btn btn-warning" (click)="editOrderItem(orderitem)">
+                                  <span class="glyphicon glyphicon-pencil"></span>
+                                </button>
                               </td>
                               <td class="text-center">
-                                <button type="submit" class="btn btn-danger" (click)="deleteButton(orderitem)">{{ 'delete' | translate }}</button>
+                                <button type="submit" class="btn btn-danger" (click)="deleteButton(orderitem)">
+                                  <span class="glyphicon glyphicon-remove"></span>
+                                </button>
                               </td>
                           </tr>
                           <tr>
@@ -143,3 +150,30 @@
               <button class="btn btn-lg btn-danger" (click)="cancelButton()">{{ 'no' | translate }}</button>
             </div>
         </app-delete-dialog>
+
+
+      <app-errors-dialog [(visible)]="showDialog1">
+
+          <div *ngIf="errorsCounter != 0" class="changesNotSaved">
+            <h1 class="text-danger text-center">{{ 'changesNotSaved' | translate }}</h1>
+            <div class="text-danger text-left">
+              <h3>{{ 'errors' | translate }}</h3>
+              <ul>
+                <li *ngFor="let error of errors1">
+                  <strong>{{ error | translate }}</strong>
+                </li>
+              </ul>
+            </div>
+            <div class="text-center buttons">
+              <button class="btn btn-lg btn-primary" (click)="refreshList()">{{ 'ok' | translate }}</button>
+            </div>
+          </div>
+
+          <div *ngIf="errorsCounter == 0" class="changesSaved">
+            <h1 class="text-center">{{ 'changesSaved' | translate }}</h1>
+            <div class="text-center buttons">
+              <button class="btn btn-lg btn-primary" (click)="refreshList()">{{ 'ok' | translate }}</button>
+            </div>
+          </div>
+
+        </app-errors-dialog>

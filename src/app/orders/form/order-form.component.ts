@@ -101,6 +101,9 @@ export class OrderFormComponent implements OnInit {
   selectedUnit = { name: '', rate: 1 };
   units = [ { name: 'kg', rate: 1 },
             { name: 'g', rate: 0.001}];
+  editableCoulumn: '';
+  editableRow: '';
+  showErrorsAlert = false;
 
   constructor(private ordersService: OrdersService,
               private suppliersService: SuppliersService,
@@ -260,6 +263,8 @@ export class OrderFormComponent implements OnInit {
         this.clearOrderItem();
         this.getTotalPrice();
       });
+    } else {
+      this.showErrorsAlert = true;
     }
   }
 
@@ -361,21 +366,6 @@ export class OrderFormComponent implements OnInit {
     this.showDialog = false;
   }
 
-  //changes in the order table that must be saved on back-end
-  onRowClick(event, orderitem, field) {
-    if (this.isEqual(field, 'orderitem.quantity')) {
-      if (!isNaN(Number(event.target.outerText))) {
-        orderitem.quantity = event.target.outerText;
-      }
-    }
-
-    this.orderItemsService.saveOrderItem(orderitem).subscribe(orderItem => {
-        this.getOrderItemsByOrder(this.order.id);
-        this.clearOrderItem();
-        this.getTotalPrice();
-    });
-  }
-
   isEmpty(object) {
     return object === '';
   }
@@ -467,6 +457,55 @@ export class OrderFormComponent implements OnInit {
       // calculate the orderitem's quantity
       this.orderitem.quantity *= this.selectedUnit.rate;
     }
+  }
+
+  focusOut(){
+     this.editableCoulumn = '';
+     this.editableRow = '';
+     const elements =  (<HTMLScriptElement[]><any>document.getElementsByClassName('text-span'));
+     for (let i = 0; i < elements.length; i++) {
+        elements[i].style.display = 'inline';
+     }
+  }
+
+  focusIn(i,j){
+     this.editableCoulumn = i;
+     this.editableRow = j;
+  } 
+
+  saveCurrentOrderItem(orderitem){
+    this.itemErrors = [];
+    this.itemErrorsCounter = 0;
+
+
+    console.log(orderitem);
+
+
+    this.validateCurrentOrderItem(orderitem);
+
+    if (this.itemErrorsCounter === 0) {
+      orderitem.order.id = this.order.id;
+
+      this.orderItemsService.saveOrderItem(orderitem).subscribe(orderItem => {
+        this.getOrderItemsByOrder(this.order.id);
+        this.clearOrderItem();
+        this.getTotalPrice();
+      });
+    } else {
+      this.showErrorsAlert = false;
+    }
+  }
+  
+  validateCurrentOrderItem(orderitem){
+
+    if (orderitem.quantity < 1 || orderitem.quantity > 1000) {
+      this.itemErrors[this.itemErrorsCounter++] = 'quantityInvalid';
+    }
+
+    if (this.isEmpty(orderitem.quantity)){
+      this.itemErrors[this.itemErrorsCounter++] = 'quantityRequired';
+    } 
+
   }
 
 }

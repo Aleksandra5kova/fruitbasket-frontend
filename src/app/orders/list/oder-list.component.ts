@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { OrdersService } from '../orders.service';
+import { SuppliersService } from '../../suppliers/suppliers.service';
 
 @Component({
   selector: 'app-order-list',
@@ -12,6 +13,7 @@ export class OrderListComponent implements OnInit {
   errors;
   selectedOrder;
   showDialog = false;
+  showDialog1 = false;
   orders;
   order = {
     id: '',
@@ -23,10 +25,20 @@ export class OrderListComponent implements OnInit {
     deliveryDate: '',
     deliveryTime: ''
   };
-   errorsCounter = 0;
-   errors1;
+  suppliers = [];
+  selectedSupplier = {
+      id: '',
+      name: '',
+      address: '',
+      phone: ''
+  };
+  errorsCounter = 0;
+  errors1;
+  editableCoulumn: '';
+  editableRow: '';
 
-   constructor(private ordersService: OrdersService) {
+   constructor(private ordersService: OrdersService,
+               private suppliersService: SuppliersService) {
       ordersService.orderForm$.subscribe( order => {
         this.getOrders();
       });
@@ -40,6 +52,7 @@ export class OrderListComponent implements OnInit {
 
    ngOnInit() {
      this.getOrders();
+     this.getSuppliers();
    }
 
    saveOrder(order) {
@@ -48,9 +61,7 @@ export class OrderListComponent implements OnInit {
     this.errorsCounter = 0;
 
     this.validateOrder(order);
-
-    console.log(this.errorsCounter);
-    console.log(this.errors1);
+    this.showDialog1 = true;
 
     if (this.errorsCounter === 0) {
       this.ordersService.saveOrder(order).subscribe((order) => {
@@ -71,18 +82,18 @@ export class OrderListComponent implements OnInit {
     if (this.isEmpty(order.paymentDate)) {
       this.errors1[this.errorsCounter++] = 'paymentDateRequired';
     }
-    /*if (this.order.deliveryDate === null || this.isEmpty(this.order.deliveryDate)) {
+    if (order.deliveryDate === null || this.isEmpty(order.deliveryDate)) {
       this.errors1[this.errorsCounter++] = 'deliveryDateRequired';
     } else {
-      if(this.order.deliveryDate != null && !this.isEmpty(this.order.deliveryDate)){
-        if (this.isDateInvalid(this.order.deliveryDate) || this.isDatePast(this.order.deliveryDate)) {
+      if (order.deliveryDate != null && !this.isEmpty(order.deliveryDate)) {
+        if (this.isDateInvalid(order.deliveryDate) || this.isDatePast(order.deliveryDate)) {
           this.errors1[this.errorsCounter++] = 'deliveryDateInvalid';
         }
-        if (this.compareDates(this.order.issueDate, this.order.deliveryDate)) {
+        if (this.compareDates(order.issueDate, order.deliveryDate)) {
           this.errors1[this.errorsCounter++] = 'deliveryNotAllowed';
         }
       }
-    }*/
+    }
     if (this.isDateInvalid(order.issueDate) || this.isDatePast(order.issueDate)) {
       this.errors1[this.errorsCounter++] = 'issueDateInvalid';
     }
@@ -95,6 +106,13 @@ export class OrderListComponent implements OnInit {
   getOrders() {
     this.ordersService.getOrders().subscribe( orders => {
         this.orders = orders;
+     });
+  }
+
+  // list all suppliers in appropriate dropdown
+  getSuppliers() {
+     this.suppliersService.getSuppliers().subscribe( suppliers => {
+       this.suppliers = suppliers;
      });
   }
 
@@ -118,27 +136,6 @@ export class OrderListComponent implements OnInit {
   // edit button in the table (sends the order to the form)
   editButton(order) {
     this.ordersService.editOrder(order);
-  }
-
-  onRowClickOrder(event, order, field) {
-
-    if (this.isEqual(field, 'order.orderNo')) {
-      order.orderNo = event.target.outerText;
-    }
-    if (this.isEqual(field, 'order.issueDate')) {
-      order.issueDate = event.target.outerText;
-    }
-    if (this.isEqual(field, 'order.paymentDate')) {
-      order.paymentDate = event.target.outerText;
-    }
-    if (this.isEqual(field, 'order.deliveryDate')) {
-      order.deliveryDate = event.target.outerText;
-    }
-
-    this.ordersService.saveOrder(order).subscribe( order => {
-        this.order = order;
-    });
-
   }
 
   isEqual(field, value) {
@@ -167,6 +164,26 @@ export class OrderListComponent implements OnInit {
     const inputDate2 = new Date(parts2[0], parts2[1]-1, parts2[2]);
     return inputDate1 > inputDate2;
   }
+
+  // ok in errors dialog
+  refreshList() {
+    this.getOrders();
+    this.showDialog1 = false;
+  }
+
+  focusOut(){
+     this.editableCoulumn = '';
+     this.editableRow = '';
+     const elements =  (<HTMLScriptElement[]><any>document.getElementsByClassName('text-span'));
+     for (let i = 0; i < elements.length; i++) {
+        elements[i].style.display = 'inline';
+     }
+  }
+
+  focusIn(i,j){
+     this.editableCoulumn = i;
+     this.editableRow = j;
+  } 
 
 }
 
