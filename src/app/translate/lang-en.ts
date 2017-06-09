@@ -68,7 +68,12 @@ export const LANG_EN_TRANS = {
     'save': 'Save',
     'enterOrder' : 'Insert order first.',
     'itemRequired' : 'Item is required.',
-    'quantityRequired' : 'Quantity is required.',
+    'quantityInvalid' : 'Quantity must be between 1-1000.',
     'deliveryTime' : 'Delivery Time',
-    'unitRequired' : 'Unit is required.'
+    'unitRequired' : 'Unit is required.',
+    'issueDateInvalid' : 'Issue Date is not valid.',
+    'paymentDateInvalid' : 'Payment Date is not valid.',
+    'deliveryDateInvalid' : 'Delivery Date is not valid.',
+    'deliveryNotAllowed' : 'Delivery is not not allowed before issue date.'
+
 };

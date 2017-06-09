@@ -57,7 +57,7 @@ export class OrderFormComponent implements OnInit {
   orderitems = [];
   orderitem = {
     id: '',
-    quantity: '',
+    quantity: 0,
     unit: '',
     price: '',
     food: {
@@ -78,11 +78,11 @@ export class OrderFormComponent implements OnInit {
   errorsCounter = 0;
   itemErrors = [];
   itemErrorsCounter = 0;
-  currentQuantity = '';
+  currentQuantity = 0;
   total = 0;
   selectedOrderItem = {
     id: '',
-    quantity: '',
+    quantity: 0,
     unit: '',
     price: '',
     food: {
@@ -98,9 +98,9 @@ export class OrderFormComponent implements OnInit {
       id: ''
     }
   };
-  selectedUnit = { id: '', name: '' };
-  units = [ { id: '1', name: 'g' },
-            { id: '2', name: 'kg' }];
+  selectedUnit = { name: '', rate: 1 };
+  units = [ { name: 'kg', rate: 1 },
+            { name: 'g', rate: 0.001}];
 
   constructor(private ordersService: OrdersService,
               private suppliersService: SuppliersService,
@@ -139,26 +139,7 @@ export class OrderFormComponent implements OnInit {
     this.errors = [];
     this.errorsCounter = 0;
 
-    if (this.isEmpty(this.order.orderNo)) {
-      this.errors[this.errorsCounter++] = 'orderNoRequired';
-    }
-    if (this.isEmpty(this.selectedSupplier.id)) {
-      this.errors[this.errorsCounter++] = 'supplierRequired';
-    }
-    if (this.isEmpty(this.order.issueDate)) {
-      this.errors[this.errorsCounter++] = 'issueDateRequired';
-    }
-    if (this.isEmpty(this.order.paymentDate)) {
-      this.errors[this.errorsCounter++] = 'paymentDateRequired';
-    }
-    if (this.deliveryFlag === true && ( this.order.deliveryDate === null || this.isEmpty(this.order.deliveryDate))) {
-      this.errors[this.errorsCounter++] = 'deliveryDateRequired';
-    }
-
-    const datePipe = new DatePipe('en-US');
-    this.order.issueDate = datePipe.transform(this.order.issueDate, 'yyyy-MM-dd');
-    this.order.paymentDate = datePipe.transform(this.order.paymentDate, 'yyyy-MM-dd');
-    this.order.deliveryDate = datePipe.transform(this.order.deliveryDate, 'yyyy-MM-dd');
+    this.validateOrder();
 
     if (this.errorsCounter === 0) {
       if (this.deliveryFlag === true) {
@@ -217,7 +198,7 @@ export class OrderFormComponent implements OnInit {
     };
     this.orderitem = {
       id: '',
-      quantity: '',
+      quantity: 0,
       unit: '',
       price: '',
       food: {
@@ -239,8 +220,8 @@ export class OrderFormComponent implements OnInit {
     this.itemErrors = [];
     this.itemErrorsCounter = 0;
     this.ordersService.cancelChange(this.order);
-    this.currentQuantity = '';
-    this.selectedUnit = { id: '', name: '' };
+    this.currentQuantity = 0;
+    this.selectedUnit = { name: '', rate: 1 };
   }
 
   // get foods of some foodtype (on change on foodtype dropdown)
@@ -261,29 +242,7 @@ export class OrderFormComponent implements OnInit {
     this.itemErrors = [];
     this.itemErrorsCounter = 0;
 
-    if (this.isEmpty(this.order.id)) {
-      this.itemErrors[this.itemErrorsCounter++] = 'enterOrder';
-    }
-    if (this.isEmpty(this.selectedFood.id)) {
-      this.itemErrors[this.itemErrorsCounter++] = 'itemRequired';
-    } else {
-      this.orderitem.food = this.selectedFood;
-    }
-    if (this.isEmpty(this.currentQuantity)) {
-      this.itemErrors[this.itemErrorsCounter++] = 'quantityRequired';
-    } else {
-      this.orderitem.quantity = this.currentQuantity;
-    }
-    if (this.isEmpty(this.selectedUnit.id)) {
-      this.itemErrors[this.itemErrorsCounter++] = 'unitRequired';
-    } else {
-      // set orderitem's unit
-      for ( let i = 0; i < this.units.length; i++ ) {
-        if (this.units[i].id == this.selectedUnit.id) {
-          this.orderitem.unit = this.units[i].name;
-        }
-      }
-    }
+    this.validateOrderItem();
 
     if (this.itemErrorsCounter === 0) {
       this.orderitem.order.id = this.order.id;
@@ -304,6 +263,25 @@ export class OrderFormComponent implements OnInit {
     }
   }
 
+   // edit orderitem
+  editOrderItem(orderitem) {
+
+    // delete all errors before editing new orderitem
+    this.itemErrors = [];
+    this.itemErrorsCounter = 0;
+
+    this.orderitem = orderitem;
+    this.selectedFoodType = orderitem.food.foodType;
+    this.getFoodsByFoodType();
+    this.selectedFood = orderitem.food;
+    this.currentQuantity = orderitem.quantity;
+
+    // select default unit when editing orderitem
+    this.selectedUnit.name = this.units[0].name;
+    this.selectedUnit.rate = this.units[0].rate;
+
+  }
+
   // clear the orderitem form
   clearOrderItem() {
     this.selectedFoodType = {
@@ -321,7 +299,7 @@ export class OrderFormComponent implements OnInit {
     };
     this.orderitem = {
       id: '',
-      quantity: '',
+      quantity: 0,
       unit: '',
       price: '',
       food: {
@@ -337,30 +315,8 @@ export class OrderFormComponent implements OnInit {
         id: ''
       }
     };
-    this.currentQuantity = '';
-    this.selectedUnit = { id: '', name: '' };
-  }
-
-  // edit orderitem
-  editOrderItem(orderitem) {
-
-    // delete all errors before editing new orderitem
-    this.errorsCounter = 0;
-    this.itemErrors = [];
-
-    this.orderitem = orderitem;
-    this.selectedFoodType = orderitem.food.foodType;
-    this.getFoodsByFoodType();
-    this.selectedFood = orderitem.food;
-    this.currentQuantity = orderitem.quantity;
-
-    // selecting orderitem's unit and populating the unit dropdown
-    for ( let i = 0; i < this.units.length; i++ ) {
-      if (this.units[i].name == this.orderitem.unit) {
-        this.selectedUnit.id = this.units[i].id;
-        this.selectedUnit.name = this.units[i].name;
-      }
-    }
+    this.currentQuantity = 0;
+    this.selectedUnit = { name: '', rate: 1 };
   }
 
   // get all the foods
@@ -405,6 +361,7 @@ export class OrderFormComponent implements OnInit {
     this.showDialog = false;
   }
 
+  //changes in the order table that must be saved on back-end
   onRowClick(event, orderitem, field) {
     if (this.isEqual(field, 'orderitem.quantity')) {
       if (!isNaN(Number(event.target.outerText))) {
@@ -425,6 +382,91 @@ export class OrderFormComponent implements OnInit {
 
   isEqual(field, value) {
     return field === value;
+  }
+
+  isDateInvalid(date){
+    return !/^\d{4}\-\d{2}\-\d{2}$/.test(date);
+  }
+
+  isDatePast(date) {
+    const parts = date.split('-');
+    const inputDate = new Date(parts[0], parts[1]-1, parts[2]);
+    const today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
+    return inputDate < today;
+  }
+
+  compareDates(date1, date2){
+    const parts1 = date1.split('-');
+    const inputDate1 = new Date(parts1[0], parts1[1]-1, parts1[2]);
+    const parts2 = date2.split('-');
+    const inputDate2 = new Date(parts2[0], parts2[1]-1, parts2[2]);
+    return inputDate1 > inputDate2;
+  }
+
+  // change the unit rate when change event happens on select
+  changeUnitRate(){
+    for ( let i = 0; i < this.units.length; i++ ) {
+        if (this.units[i].name == this.selectedUnit.name) {
+          this.selectedUnit.rate = this.units[i].rate;
+        }
+    }
+  }
+
+  // validation before saving order
+  validateOrder(){
+    if (this.isEmpty(this.order.orderNo)) {
+      this.errors[this.errorsCounter++] = 'orderNoRequired';
+    }
+    if (this.isEmpty(this.selectedSupplier.id)) {
+      this.errors[this.errorsCounter++] = 'supplierRequired';
+    }
+    if (this.isEmpty(this.order.issueDate)) {
+      this.errors[this.errorsCounter++] = 'issueDateRequired';
+    }
+    if (this.isEmpty(this.order.paymentDate)) {
+      this.errors[this.errorsCounter++] = 'paymentDateRequired';
+    }
+    if (this.deliveryFlag === true && ( this.order.deliveryDate === null || this.isEmpty(this.order.deliveryDate))) {
+      this.errors[this.errorsCounter++] = 'deliveryDateRequired';
+    } else {
+      if(this.order.deliveryDate != null && !this.isEmpty(this.order.deliveryDate)){
+        if (this.isDateInvalid(this.order.deliveryDate) || this.isDatePast(this.order.deliveryDate)) {
+          this.errors[this.errorsCounter++] = 'deliveryDateInvalid';
+        }
+        if (this.compareDates(this.order.issueDate, this.order.deliveryDate)) {
+          this.errors[this.errorsCounter++] = 'deliveryNotAllowed';
+        }
+      }
+    }
+    if (this.isDateInvalid(this.order.issueDate) || this.isDatePast(this.order.issueDate)) {
+      this.errors[this.errorsCounter++] = 'issueDateInvalid';
+    }
+    if (this.isDateInvalid(this.order.paymentDate) || this.isDatePast(this.order.paymentDate)) {
+      this.errors[this.errorsCounter++] = 'paymentDateInvalid';
+    }
+  }
+
+  // validation before saving orderitem
+  validateOrderItem(){
+    if (this.isEmpty(this.order.id)) {
+      this.itemErrors[this.itemErrorsCounter++] = 'enterOrder';
+    }
+    if (this.isEmpty(this.selectedFood.id)) {
+      this.itemErrors[this.itemErrorsCounter++] = 'itemRequired';
+    } else {
+      this.orderitem.food = this.selectedFood;
+    }
+    if (this.currentQuantity < 1 || this.currentQuantity > 1000) {
+      this.itemErrors[this.itemErrorsCounter++] = 'quantityInvalid';
+    } else {
+      this.orderitem.quantity = this.currentQuantity;
+    }
+    if (this.isEmpty(this.selectedUnit.name)) {
+      this.itemErrors[this.itemErrorsCounter++] = 'unitRequired';
+    } else {
+      // calculate the orderitem's quantity
+      this.orderitem.quantity *= this.selectedUnit.rate;
+    }
   }
 
 }

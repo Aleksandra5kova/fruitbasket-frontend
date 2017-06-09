@@ -28,7 +28,6 @@ export class OrdersService {
 
    // create or update orders
    saveOrder(order) {
-       console.log(order.issueDate);
       return this.http.post(`${this.baseUrl}/orders`, order).map((response) => {
         this.orderFormSource.next(order);
         return response.json();

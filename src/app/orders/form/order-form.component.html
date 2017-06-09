@@ -28,7 +28,7 @@
                       {{ 'checkForDelivery' | translate }}
                     </label>
                   </div>
-                  <div class="row">
+                  <div class="row" >
                     <div class="form-group col-md-6" *ngIf="deliveryFlag">
                       <label for="deliveryDateInput">{{ 'deliveryDate' | translate }}</label>
                       <input [(ngModel)]="order.deliveryDate" name="deliveryDate" type="date" class="form-control" id="deliveryDateInput" />
@@ -73,12 +73,12 @@
                       </div>
                       <div class="form-group col-md-3 quantity-div">
                         <label for="quantityInput">{{ 'quantity' | translate }}</label>
-                        <input type="number" class="form-control" id="quantityInput" [(ngModel)]="currentQuantity" name="currentQuantity"/>
+                        <input type="number" class="form-control" id="quantityInput" [(ngModel)]="currentQuantity" name="currentQuantity" />
                       </div>
                       <div class="form-group col-md-2">
                           <label for="unitInput">{{ 'unit' | translate }}</label>
-                          <select class="form-control" [(ngModel)]="selectedUnit.id" [ngModelOptions]="{standalone: true}">
-                            <option *ngFor="let unit of units" value={{unit.id}} >{{unit.name}}</option>
+                          <select class="form-control" [(ngModel)]="selectedUnit.name" [ngModelOptions]="{standalone: true}" (change)="changeUnitRate()">
+                            <option *ngFor="let unit of units" value={{unit.name}} >{{unit.name}}</option>
                           </select>
                       </div>
                       <div class="form-group col-md-1 add-div">
@@ -111,9 +111,9 @@
                           <tr *ngFor="let orderitem of orderitems">
                               <td class="text text-center">{{orderitem.food.name}}</td>
                               <td class="text text-center" contenteditable='true' (input)="onRowClick($event, orderitem, 'orderitem.quantity')">{{orderitem.quantity}}</td>
-                              <td class="text text-center">1 {{orderitem.unit}}</td>
-                              <td class="text text-right">{{orderitem.price}}</td>
-                              <td class="text text-right">{{orderitem.price * orderitem.quantity}}</td>
+                              <td class="text text-center">1 kg</td>
+                              <td class="text text-right">{{orderitem.food.price}}</td>
+                              <td class="text text-right">{{orderitem.food.price * orderitem.quantity}}</td>
                               <td class="text-center">
                                 <button type="submit" class="btn btn-warning" (click)="editOrderItem(orderitem)">{{ 'edit' | translate }}</button>
                               </td>

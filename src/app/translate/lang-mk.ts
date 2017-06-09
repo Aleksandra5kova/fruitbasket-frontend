@@ -68,7 +68,11 @@ export const LANG_MK_TRANS = {
     'save': 'Зачувај',
     'enterOrder' : 'Најпрво внесете артикал.',
     'itemRequired' : 'Артикал е задолжително поле.',
-    'quantityRequired' : 'Количината е задолжително поле.',
+    'quantityInvalid' : 'Количината мора да биде помеѓу 1-1000.',
     'deliveryTime' : 'Време на достава',
-    'unitRequired' : 'Мерката е задолжително поле.'
+    'unitRequired' : 'Мерката е задолжително поле.',
+    'issueDateInvalid' : 'Датумот на издавање не е валиден.',
+    'paymentDateInvalid' : 'Датумот на плаќање не е валиден.',
+    'deliveryDateInvalid' : 'Датумот на испорака не е валиден.',
+    'deliveryNotAllowed' : 'Не е дозволена достава пред денот на издавање на нарачката.'
 };
