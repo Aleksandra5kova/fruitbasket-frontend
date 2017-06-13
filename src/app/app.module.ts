@@ -14,8 +14,8 @@ import { OrdersComponent } from './orders/orders.component';
 import { OrderListComponent } from './orders/list/oder-list.component';
 import { OrderFormComponent } from './orders/form/order-form.component';
 import { MenuComponent } from './menu/menu.component';
-import { DeleteDialogComponent } from './orders/list/delete-dialog/delete-dialog.component';
-import { ErrorsDialogComponent } from './orders/list/errors-dialog/errors-dialog.component';
+import { DeleteDialogComponent } from './orders/delete-dialog/delete-dialog.component';
+import { ErrorsDialogComponent } from './orders/errors-dialog/errors-dialog.component';
 
 import { UsersService } from './users/users.service';
 import { AuthService } from './users/auth.service';

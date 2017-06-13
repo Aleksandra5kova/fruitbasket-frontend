@@ -43,4 +43,10 @@ hr {
 .text-span {
   cursor: cell;
 }
+.changesSaved {
+  padding-top: 10px;
+}
+.changesNotSaved .text-left {
+  padding-left: 80px;
+}
 

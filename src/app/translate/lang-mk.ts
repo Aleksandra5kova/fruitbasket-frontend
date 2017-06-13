@@ -68,7 +68,7 @@ export const LANG_MK_TRANS = {
     'save': 'Зачувај',
     'enterOrder' : 'Најпрво внесете артикал.',
     'itemRequired' : 'Артикал е задолжително поле.',
-    'quantityInvalid' : 'Количината мора да биде помеѓу 1-1000.',
+    'quantityInvalid' : 'Количината мора да биде помеѓу 0-1000.',
     'deliveryTime' : 'Време на достава',
     'unitRequired' : 'Мерката е задолжително поле.',
     'issueDateInvalid' : 'Датумот на издавање не е валиден.',

@@ -183,7 +183,7 @@ export class OrderListComponent implements OnInit {
   focusIn(i,j){
      this.editableCoulumn = i;
      this.editableRow = j;
-  } 
+  }
 
 }
 

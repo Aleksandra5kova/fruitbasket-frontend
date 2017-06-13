@@ -42,7 +42,7 @@
                       <span class="text-span" (click)="focusIn(6,i)"  onClick="this.style.display='none';">{{ order.deliveryDate }}</span>
                       <input (focusout)="focusOut()" *ngIf="editableCoulumn == 6 && editableRow == i && order.hasDelivey" [(ngModel)]="order.deliveryDate" name="deliveryDate" type="date" class="form-control" id="deliveryDateInput" (change)="saveOrder(order)" focus="true"/>
                     </td>
-                    <td class="text text-center" contenteditable='true' (input)="onRowClickOrder($event, order, 'order.deliveryTime')">{{order.deliveryTime}}</td>
+                    <td class="text text-center" >{{order.deliveryTime}}</td>
                     <td class="text-center">
                       <button type="submit" class="btn btn-warning" (click)="editButton(order)">
                         <span class="glyphicon glyphicon-pencil"></span>

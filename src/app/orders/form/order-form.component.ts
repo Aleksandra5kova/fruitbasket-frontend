@@ -15,6 +15,7 @@ import { OrderItemsService } from '../../orderitems/orderitems.service';
 })
 export class OrderFormComponent implements OnInit {
 
+  showDialog1 = false;
   showDialog = false;
   order = {
     id: '',
@@ -103,7 +104,8 @@ export class OrderFormComponent implements OnInit {
             { name: 'g', rate: 0.001}];
   editableCoulumn: '';
   editableRow: '';
-  showErrorsAlert = false;
+  errors1 = [];
+  errorsCounter1 = 0;
 
   constructor(private ordersService: OrdersService,
               private suppliersService: SuppliersService,
@@ -263,9 +265,7 @@ export class OrderFormComponent implements OnInit {
         this.clearOrderItem();
         this.getTotalPrice();
       });
-    } else {
-      this.showErrorsAlert = true;
-    }
+    } 
   }
 
    // edit orderitem
@@ -446,7 +446,7 @@ export class OrderFormComponent implements OnInit {
     } else {
       this.orderitem.food = this.selectedFood;
     }
-    if (this.currentQuantity < 1 || this.currentQuantity > 1000) {
+    if (this.currentQuantity <= 0 || this.currentQuantity > 1000) {
       this.itemErrors[this.itemErrorsCounter++] = 'quantityInvalid';
     } else {
       this.orderitem.quantity = this.currentQuantity;
@@ -468,22 +468,21 @@ export class OrderFormComponent implements OnInit {
      }
   }
 
-  focusIn(i,j){
+  focusIn(i,j) {
      this.editableCoulumn = i;
      this.editableRow = j;
-  } 
+  }
 
-  saveCurrentOrderItem(orderitem){
-    this.itemErrors = [];
-    this.itemErrorsCounter = 0;
-
+  saveCurrentOrderItem(orderitem) {
+    this.errors1 = [];
+    this.errorsCounter1 = 0;
 
     console.log(orderitem);
 
-
     this.validateCurrentOrderItem(orderitem);
+    this.showDialog1 = true;
 
-    if (this.itemErrorsCounter === 0) {
+    if (this.errorsCounter1 === 0) {
       orderitem.order.id = this.order.id;
 
       this.orderItemsService.saveOrderItem(orderitem).subscribe(orderItem => {
@@ -491,21 +490,28 @@ export class OrderFormComponent implements OnInit {
         this.clearOrderItem();
         this.getTotalPrice();
       });
-    } else {
-      this.showErrorsAlert = false;
-    }
+    } 
   }
-  
+
   validateCurrentOrderItem(orderitem){
 
-    if (orderitem.quantity < 1 || orderitem.quantity > 1000) {
-      this.itemErrors[this.itemErrorsCounter++] = 'quantityInvalid';
+    if (orderitem.quantity <= 0 || orderitem.quantity > 1000) {
+      this.errors1[this.errorsCounter1++] = 'quantityInvalid';
     }
 
     if (this.isEmpty(orderitem.quantity)){
-      this.itemErrors[this.itemErrorsCounter++] = 'quantityRequired';
-    } 
+      this.errors1[this.errorsCounter1++] = 'quantityRequired';
+    }
+    
+    if(this.errorsCounter1 != 0) {
+      this.getOrderItemsByOrder(orderitem.order.id);
+    }
 
+  }
+
+  // ok in errors dialog
+  refreshList() {
+    this.showDialog1 = false;
   }
 
 }
