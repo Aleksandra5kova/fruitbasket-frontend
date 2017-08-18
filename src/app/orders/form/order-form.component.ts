@@ -158,6 +158,7 @@ export class OrderFormComponent implements OnInit {
       this.ordersService.saveOrder(this.order).subscribe((order) => {
         this.order = order;
       });
+
     }
 
   }
@@ -265,7 +266,7 @@ export class OrderFormComponent implements OnInit {
         this.clearOrderItem();
         this.getTotalPrice();
       });
-    } 
+    }
   }
 
    // edit orderitem
@@ -490,7 +491,7 @@ export class OrderFormComponent implements OnInit {
         this.clearOrderItem();
         this.getTotalPrice();
       });
-    } 
+    }
   }
 
   validateCurrentOrderItem(orderitem){
@@ -502,7 +503,7 @@ export class OrderFormComponent implements OnInit {
     if (this.isEmpty(orderitem.quantity)){
       this.errors1[this.errorsCounter1++] = 'quantityRequired';
     }
-    
+
     if(this.errorsCounter1 != 0) {
       this.getOrderItemsByOrder(orderitem.order.id);
     }

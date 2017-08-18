@@ -5,6 +5,7 @@ import { UserRegistrationComponent } from './users/users-registration.component'
 import { UsersSignInComponent } from './users/users-login.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { OrdersComponent } from './orders/orders.component';
+import { NotificationComponent } from './multicast-notifications/multicast-notifications.component';
 
 import { CanActivateViaAuthGuard } from './users/auth-guard.service';
 
@@ -14,7 +15,8 @@ const appRoutes: Routes = [
     { path: 'users-sign-in', component: UsersSignInComponent },
     { path: 'welcome', component: WelcomeComponent, canActivate: [CanActivateViaAuthGuard]},
     { path: 'users-list', component: UsersListComponent, canActivate: [CanActivateViaAuthGuard]},
-    { path: 'orders', component: OrdersComponent, canActivate: [CanActivateViaAuthGuard] }
+    { path: 'orders', component: OrdersComponent, canActivate: [CanActivateViaAuthGuard] },
+    { path: 'notifications', component: NotificationComponent, canActivate: [CanActivateViaAuthGuard] }
 ];
 
 export const routing = RouterModule.forRoot(appRoutes);

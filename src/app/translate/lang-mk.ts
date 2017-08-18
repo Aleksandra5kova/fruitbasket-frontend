@@ -78,5 +78,8 @@ export const LANG_MK_TRANS = {
     'changesNotSaved' : 'Промените не се зачувани!',
     'changesSaved' : 'Промените се зачувани',
     'ok' : 'Во ред.',
-    'quantityRequired' : 'Количината е задолжително поле.'
+    'quantityRequired' : 'Количината е задолжително поле.',
+    'notifications': 'Известувања',
+    'notification': 'Известување',
+    'send': 'Испрати'
 };

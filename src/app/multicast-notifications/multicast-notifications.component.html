@@ -1,0 +1,64 @@
+<app-menu></app-menu>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="page-header">
+        <h2>{{ 'notifications' | translate }}</h2>
+      </div>
+
+      <div class="row">
+        <div class="col-md-5">
+          <h4>{{ 'newOrder' | translate }}</h4><br/>
+          <div class="row order-form">
+            <div class="col-md-12">
+              <form>
+                <div class="row">
+                  <div class="form-group col-md-8">
+                    <label for="NotificationInput">{{ 'notification' | translate }}</label>
+                    <input [(ngModel)]="notification.message" name="message" type="text" class="form-control" id="messageInput" maxlength="300"/>
+                  </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                      <div class="buttons col-md-offset-4 col-md-8"><br/>
+                          <button type="submit" class="btn btn-primary" (click)="sendNotification()">{{ 'send' | translate }}</button>&nbsp;
+                          <button type="submit" class="btn btn-warning" (click)="clearForm()">{{ 'cancel' | translate }}</button>
+                      </div>
+                     </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <!--<div class="col-md-7">
+         <table class="table table-striped table-bordered">
+            <thead>
+              <tr>
+                <th class="text-center">{{ 'notifications' | translate }}</th>
+                <th class="text-center"></th>
+                <th class="text-center"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let notification of notifications">
+                <td class="text text-center" style="padding-top:15px;">{{notification.message}}</td>
+                <td class="text text-center">
+                  <button type="submit" class="btn btn-warning">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                  </button>
+                </td>
+                <td class="text text-center">
+                  <button type="submit" class="btn btn-danger" >
+                    <span class="glyphicon glyphicon-remove"></span>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+         </table>
+        </div>-->
+      </div>
+
+    </div>
+  </div>
+</div>

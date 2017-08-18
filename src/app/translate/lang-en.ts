@@ -78,6 +78,9 @@ export const LANG_EN_TRANS = {
     'changesNotSaved' : 'Changes are not saved!',
     'changesSaved' : 'Changes are saved.',
     'ok' : 'OK',
-    'quantityRequired' : 'Quantity is required.'
+    'quantityRequired' : 'Quantity is required.',
+    'notifications': 'Notifications',
+    'notification': 'Notification',
+    'send': 'Send'
 
 };
